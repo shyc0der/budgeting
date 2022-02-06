@@ -38,7 +38,11 @@ class _SignUpPageState extends State<SignUpPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-            Container(child: const Text('Create Account',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 23,color: Colors.black),),),
+            Container(child: const
+             Text('Create Account',
+             style: TextStyle(fontWeight: FontWeight.bold,fontSize: 23,color: Colors.black)
+             ,)
+             ,),
            const SizedBox(height: 10,),
            inputField('FULL NAME', fullNameController, fullNameError),
            inputField('EMAIL', emailController, emailError),
@@ -49,33 +53,16 @@ class _SignUpPageState extends State<SignUpPage> {
            //sign up button
 
              Align(
-                 alignment: Alignment.bottomRight,
-                   child: Container(
-                     
-                   width: 125,
-                   height: 40,
-                   decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(8),               
-                   ),
-                   color: Colors.orange
-                   ),
-                   margin: const EdgeInsets.symmetric(horizontal: 3), 
-                   child: ElevatedButton(onPressed: (){},
-                   style: ElevatedButton.styleFrom(
-                     primary: Colors.orange,
-                     
-                   ),
-                    child: 
-                   Container(
-                     child: Row( 
-                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                       children:const [
-                              Text('SIGN UP',style:TextStyle(fontWeight: FontWeight.normal,fontSize: 18)),
-                              Icon(Icons.arrow_forward),
-                              
-                              ]),
-                   )),
-                 ),
-           )
+             alignment: Alignment.bottomRight,
+               child: CustomElavtedButton(
+                 label: 'SIGN UP',
+                 fontSize: 18,
+                 iconData: Icons.arrow_forward,
+                 onTap: (){
+                  //TODO : save userdetails
+                },
+               ),
+       )
 
 
 

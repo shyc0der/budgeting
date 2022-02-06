@@ -3,6 +3,7 @@
 
 import 'package:budget/src/input.dart';
 import 'package:budget/src/pages/signUpPage.dart';
+import 'package:budget/src/pages/background_page.dart';
 import 'package:flutter/material.dart';
 
 
@@ -27,7 +28,7 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           
           children: [
-          const  SizedBox(height: 150,),
+          const  SizedBox(height: 150,child: BackgroundPage()),
             Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,31 +59,14 @@ class _LoginPageState extends State<LoginPage> {
        
        Align(
              alignment: Alignment.bottomRight,
-               child: Container(
-                 
-               width: 115,
-               height: 40,
-               decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(8),               
+               child: CustomElavtedButton(
+                 label: 'Login',
+                 fontSize: 20,
+                 iconData: Icons.arrow_forward,
+                 onTap: (){
+                  //TODO :CHECK WHETHER USER IS REGISTERED
+                },
                ),
-               color: Colors.orange
-               ),
-               margin: const EdgeInsets.symmetric(horizontal: 3), 
-               child: ElevatedButton(onPressed: (){},
-               style: ElevatedButton.styleFrom(
-                 primary: Colors.orange,
-                 
-               ),
-                child: 
-               Container(
-                 child: Row( 
-                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                   children:const [
-                          Text('Login',style:TextStyle(fontWeight: FontWeight.normal,fontSize: 18)),
-                          Icon(Icons.arrow_forward),
-                          
-                          ]),
-               )),
-             ),
        )
 
 
