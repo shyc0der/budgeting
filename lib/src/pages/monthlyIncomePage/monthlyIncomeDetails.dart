@@ -1,9 +1,7 @@
-// ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors
-
-import 'package:budget/src/models/budgetCategory.dart';
-import 'package:budget/src/modules/budgetCategoryModule.dart';
+import 'package:budget/src/models/monthlyIncome.dart';
+import 'package:budget/src/modules/monthlyIncome.dart';
 import 'package:budget/src/pages/background_page.dart';
-import 'package:budget/src/pages/budgetCategoryPage/addBudgetCategory.dart';
+import 'package:budget/src/pages/monthlyIncomePage/addMonthlyIncome.dart';
 import 'package:flutter/material.dart';
 
 class BudgetCategoryDetails extends StatefulWidget {
@@ -14,8 +12,7 @@ class BudgetCategoryDetails extends StatefulWidget {
 }
 
 class _BudgetCategoryDetailsState extends State<BudgetCategoryDetails> {
-  BudgetCategoryModel _budgetCategoryModel=BudgetCategoryModel();
-  BudgetCategoryModule _budgetCategoryModule=BudgetCategoryModule();
+ MonthlyIncomeModule _monthlyIncomeModule=MonthlyIncomeModule();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,25 +20,25 @@ class _BudgetCategoryDetailsState extends State<BudgetCategoryDetails> {
         //physics: const NeverScrollableScrollPhysics(),
         child:  Stack(          
           children: [
-            BackgroundPage(),
-            SizedBox(height: 20,),
+          const  BackgroundPage(),
+          const  SizedBox(height: 20,),
              Column(   
                crossAxisAlignment: CrossAxisAlignment.start, 
 
               children: [
                 
-            SizedBox(height: 70,),
+           const SizedBox(height: 70,),
                 
                 IconButton(onPressed: (){}, icon:Icon(Icons.arrow_back)  ),
-                SizedBox(height: 30,),
-                StreamBuilder<List<BudgetCategoryModel>>(
-                  stream: _budgetCategoryModule.fetchBudgets() ,
+               const SizedBox(height: 30,),
+                StreamBuilder<List<MonthlyIncomeModel>>(
+                  stream: _monthlyIncomeModule.fetchIncome() ,
                   builder: (context, snapshot) {
                     switch (snapshot.connectionState) {
                       case ConnectionState.waiting :
-                      return LinearProgressIndicator();
+                      return const LinearProgressIndicator();
                       case ConnectionState.none :
-                      return Text('NO DATA');
+                      return const Text('NO DATA');
                         
                       default:
                     
@@ -57,16 +54,7 @@ class _BudgetCategoryDetailsState extends State<BudgetCategoryDetails> {
                           return Text('No data');                    
                           default:
                               
-                      return
-                      ListTile(
-                        title: Text(snapshot.data![index].name ?? '',style: TextStyle(fontSize: 18,fontWeight:FontWeight.bold),),
-                        subtitle: Text(snapshot.data![index].dateCreated.toString(),style: TextStyle(fontSize: 16)),
-                        trailing: Text('Ksh. ${snapshot.data![index].amountBudgeted ?? ''}',style: TextStyle(fontSize: 16,
-                        color: Colors.black
-                        )),
-
-                      
-                      );                                         
+                      return Container();
                       
                       }} );
                            }         }
@@ -79,9 +67,9 @@ class _BudgetCategoryDetailsState extends State<BudgetCategoryDetails> {
       ),
     floatingActionButton: FloatingActionButton(
       backgroundColor: Colors.orange[600],
-      child: Icon(Icons.add),
+      child: const Icon(Icons.add),
       onPressed: () => 
-      Navigator.push(context,MaterialPageRoute(builder: (context) => AddBudgetCategory(),
+      Navigator.push(context,MaterialPageRoute(builder: (context) => const AddMonthlyIncome(),
       ),
       ))
     );

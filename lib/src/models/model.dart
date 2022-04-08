@@ -10,14 +10,14 @@ class Model{
   static Future<void> initiateFireStore()async{
     try{
       await Firebase.initializeApp(
-        name: 'budget',
+        //name: 'budgeting',
         options: const FirebaseOptions(
           apiKey: 'AIzaSyDwn4T6UwLMqLLD5w7jARWVJabiS7DyAmY', 
           appId: '1:834602052606:web:0852fa8eedae2746682eaf', 
           messagingSenderId: '834602052606', 
-          projectId: 'trucks-c05a8',
-          databaseURL: "https://trucks-c05a8.firebaseio.com",
-          storageBucket: "trucks-c05a8.appspot.com",
+          projectId: 'budgeting-62e58',
+          databaseURL: "https://budgeting-62e58.firebaseio.com",
+          storageBucket: "budgeting-62e58.appspot.com",
           measurementId: "G-6CQQ394FHP",
         )
 

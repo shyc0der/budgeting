@@ -1,10 +1,14 @@
+import 'package:budget/src/models/model.dart';
 import 'package:budget/src/pages/background_page.dart';
-import 'package:budget/src/pages/loginPage.dart';
+import 'package:budget/src/pages/budgetCategoryPage/addBudgetCategory.dart';
+import 'package:budget/src/pages/budgetCategoryPage/budgetCategoryDetails.dart';
 import 'package:flutter/material.dart';
 
-import 'src/pages/signUpPage.dart';
 
-void main() {
+
+void main() async {
+   WidgetsFlutterBinding.ensureInitialized();
+  await Model.initiateFireStore();
   runApp(const MyApp());
 }
 
@@ -19,7 +23,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const LoginPage(),
+      home: const BudgetCategoryDetails(),
     );
   }
 }

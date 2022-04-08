@@ -2,6 +2,7 @@
 // ignore_for_file: avoid_unnecessary_containers
 
 import 'package:budget/src/input.dart';
+import 'package:budget/src/pages/budgetCategoryPage/addBudgetCategory.dart';
 import 'package:budget/src/pages/signUpPage.dart';
 import 'package:budget/src/pages/background_page.dart';
 import 'package:flutter/material.dart';
@@ -22,14 +23,13 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          
-          children: [
+      body: Column(
+        
+        children: [
           const  SizedBox(height: 150,child: BackgroundPage()),
-            Column(
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children:  [
@@ -58,13 +58,16 @@ class _LoginPageState extends State<LoginPage> {
      const SizedBox(height: 45,),
        
        Align(
+
              alignment: Alignment.bottomRight,
                child: CustomElavtedButton(
+                  errorExists: false,
                  label: 'Login',
                  fontSize: 20,
                  iconData: Icons.arrow_forward,
                  onTap: (){
                   //TODO :CHECK WHETHER USER IS REGISTERED
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=> const AddBudgetCategory()));
                 },
                ),
        )
@@ -72,11 +75,11 @@ class _LoginPageState extends State<LoginPage> {
 
 
             ],),
-         
-          ]
-          ,
-          
-        ),
+          ),
+       
+        ]
+        ,
+        
       ),
       floatingActionButton: Align(
   alignment: Alignment.bottomCenter,

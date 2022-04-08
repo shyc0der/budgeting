@@ -20,7 +20,6 @@ class BudgetCategoryModel extends Model{
   }
   Map<String,dynamic> asMap(){
     return{
-        'id': id,
         'name': name,
         'amountBudgeted': amountBudgeted,
         'createdBy': createdBy,

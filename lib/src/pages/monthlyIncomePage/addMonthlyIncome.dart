@@ -1,23 +1,23 @@
 import 'package:budget/src/input.dart';
-import 'package:budget/src/models/budgetCategory.dart';
-import 'package:budget/src/modules/budgetCategoryModule.dart';
+import 'package:budget/src/models/monthlyIncome.dart';
+import 'package:budget/src/modules/monthlyIncome.dart';
 import 'package:budget/src/modules/responseModel.dart';
 import 'package:budget/src/pages/background_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class AddBudgetCategory extends StatefulWidget {
-  const AddBudgetCategory({ Key? key }) : super(key: key);
+class AddMonthlyIncome extends StatefulWidget {
+  const AddMonthlyIncome({ Key? key }) : super(key: key);
 
   @override
-  _AddBudgetCategoryState createState() => _AddBudgetCategoryState();
+  _AddMonthlyIncomeState createState() => _AddMonthlyIncomeState();
 }
 
-class _AddBudgetCategoryState extends State<AddBudgetCategory> {
-    
-  TextEditingController nameController=TextEditingController();
-  TextEditingController amountController=TextEditingController();
-  BudgetCategoryModule _budgetCategoryModule=BudgetCategoryModule();
+class _AddMonthlyIncomeState extends State<AddMonthlyIncome> {
+  TextEditingController salaryController=TextEditingController();
+  TextEditingController extraIncomeController=TextEditingController();
+  final MonthlyIncomeModule _monthlyIncomeModule= MonthlyIncomeModule();
+  
   bool nameError=false;
   bool amountError=false;
   bool isLoading=false;
@@ -41,11 +41,11 @@ class _AddBudgetCategoryState extends State<AddBudgetCategory> {
            
                const SizedBox(height: 60,),           
                 //Text
-                const Text('ADD BUDGET CATEGORY',         
+                const Text('ADD MONTHLY INCOME',         
                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 23,color: Colors.black),),                
                const SizedBox(height: 20,),        
               //name
-              inputField('BUDGET CATEGORY NAME ', nameController, nameError,
+              inputField('MONTHLY INCOME', salaryController, nameError,isNumbers: true,
               onChanged: (val){
                 if (val.isNotEmpty){
                   setState(() {
@@ -56,7 +56,7 @@ class _AddBudgetCategoryState extends State<AddBudgetCategory> {
               ),
                const SizedBox(height: 10,), 
               //Amount Budgeted
-              inputField('BUDGET AMOUNT ', amountController, amountError,isNumbers: true,
+              inputField('EXTRA INCOME ', extraIncomeController, amountError,isNumbers: true,
               onChanged: (val) {
                 if(val.isNotEmpty){
                    setState(() {
@@ -65,6 +65,8 @@ class _AddBudgetCategoryState extends State<AddBudgetCategory> {
                 }
               },
               ),   
+
+              //TODO: MONTH
               const  SizedBox(height:36),
              //Save
              Row(
@@ -90,12 +92,12 @@ class _AddBudgetCategoryState extends State<AddBudgetCategory> {
                      label: 'ADD BUDGET',
                      fontSize: 15,
                      onTap: (){
-                      if(nameController.text.isEmpty){
+                      if(salaryController.text.isEmpty){
                         setState((){
                           nameError=true;
                         });
                         errorExists=true;
-                      }if(amountController.text.isEmpty){
+                      }if(extraIncomeController.text.isEmpty){
                         setState((){
                           amountError=true;
                         });
@@ -123,14 +125,15 @@ class _AddBudgetCategoryState extends State<AddBudgetCategory> {
     setState(() {
       isLoading=true;
     });
-    var res=await _budgetCategoryModule.addBudget(BudgetCategoryModel(amountBudgeted: amountController.text,
-    name: nameController.text,
-    dateCreated: DateTime.now(),
-    createdBy: 'Steady',
-
-     ));
+    var res=await _monthlyIncomeModule.addIncome(MonthlyIncomeModel(
+      salary : salaryController.text ,
+      extraIncome: extraIncomeController.text,
+      createdBy: 'Steady',
+      dateCreated: DateTime.now()
+      
+    ));
     if (res.status == ResponseType.success){
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Budget Category Added Sucessfully')));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Income Added Sucessfully')));
       Navigator.pop(context);
     } 
     else{

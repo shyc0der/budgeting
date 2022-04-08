@@ -80,10 +80,11 @@ Widget inputField(String label, TextEditingController controller, bool error, {
   }
 
   class CustomElavtedButton extends StatelessWidget {
-    const CustomElavtedButton({required this.label, this.fontSize, this.iconData, this.onTap, Key? key }) : super(key: key);
+    const CustomElavtedButton({required this.label, this.fontSize, this.iconData, this.onTap,required this.errorExists, Key? key }) : super(key: key);
     final String label;
     final double? fontSize;
     final IconData? iconData;
+    final bool errorExists ;
     final void Function()? onTap;
   
     @override
@@ -118,6 +119,7 @@ Widget inputField(String label, TextEditingController controller, bool error, {
             ],
              ),
         ),
+        onTap: onTap,
       );
     }
   }
