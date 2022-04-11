@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:budget/src/models/monthlyIncome.dart';
 import 'package:budget/src/modules/monthlyIncome.dart';
 import 'package:budget/src/pages/background_page.dart';
@@ -12,7 +14,7 @@ class BudgetCategoryDetails extends StatefulWidget {
 }
 
 class _BudgetCategoryDetailsState extends State<BudgetCategoryDetails> {
- MonthlyIncomeModule _monthlyIncomeModule=MonthlyIncomeModule();
+ final MonthlyIncomeModule _monthlyIncomeModule=MonthlyIncomeModule();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +31,8 @@ class _BudgetCategoryDetailsState extends State<BudgetCategoryDetails> {
                 
            const SizedBox(height: 70,),
                 
-                IconButton(onPressed: (){}, icon:Icon(Icons.arrow_back)  ),
+                IconButton(onPressed: (){},
+                 icon:const Icon(Icons.arrow_back)  ),
                const SizedBox(height: 30,),
                 StreamBuilder<List<MonthlyIncomeModel>>(
                   stream: _monthlyIncomeModule.fetchIncome() ,
@@ -49,9 +52,9 @@ class _BudgetCategoryDetailsState extends State<BudgetCategoryDetails> {
                       itemBuilder:(context,index){ 
                         switch (snapshot.connectionState) {
                           case  ConnectionState.waiting :
-                          return LinearProgressIndicator();
+                          return const LinearProgressIndicator();
                           case ConnectionState.none:
-                          return Text('No data');                    
+                          return const Text('No data');                    
                           default:
                               
                       return Container();

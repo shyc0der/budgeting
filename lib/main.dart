@@ -1,8 +1,7 @@
 import 'package:budget/src/models/model.dart';
-import 'package:budget/src/pages/background_page.dart';
-import 'package:budget/src/pages/budgetCategoryPage/addBudgetCategory.dart';
-import 'package:budget/src/pages/budgetCategoryPage/budgetCategoryDetails.dart';
 import 'package:flutter/material.dart';
+
+import 'src/pages/budgetCategoryPage/budgetCategoryPage.dart';
 
 
 
@@ -23,7 +22,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const BudgetCategoryDetails(),
+      home: BudgetCategoryPage(),
     );
   }
 }

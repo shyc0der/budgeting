@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_unnecessary_containers
+// ignore_for_file: file_names
 
 import 'package:budget/src/input.dart';
 import 'package:budget/src/pages/background_page.dart';
@@ -42,10 +42,8 @@ class _SignUpPageState extends State<SignUpPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                Container(child: const
-                 Text('Create Account',
+                const  Text('Create Account',
                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 23,color: Colors.black)
-                 ,)
                  ,),
                const SizedBox(height: 10,),
                inputField('FULL NAME', fullNameController, fullNameError),
@@ -80,7 +78,7 @@ class _SignUpPageState extends State<SignUpPage> {
       ),
          floatingActionButton: Align(
   alignment: Alignment.bottomCenter,
-  child: Container(child: GestureDetector(
+  child: GestureDetector(
     onTap: () {
       Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=> const LoginPage()));
     },
@@ -94,9 +92,7 @@ class _SignUpPageState extends State<SignUpPage> {
     ),
     
       ),
-  )
-  
-  ,),
+  ),
 )
 
 ,

@@ -1,5 +1,4 @@
-
-// ignore_for_file: avoid_unnecessary_containers
+// ignore_for_file: file_names
 
 import 'package:budget/src/input.dart';
 import 'package:budget/src/pages/budgetCategoryPage/addBudgetCategory.dart';
@@ -34,22 +33,19 @@ class _LoginPageState extends State<LoginPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children:  [
                 // Text Login
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 5),
-                  child: Container(
-                    child: const Text('Login',
-                    style: 
-                    TextStyle(fontWeight: FontWeight.bold,fontSize: 26,color: Colors.black),
-                    ),
-                    
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 5),
+                  child: Text('Login',
+                  style: 
+                  TextStyle(fontWeight: FontWeight.bold,fontSize: 26,color: Colors.black),
                   ),
                 ),
                 //text 
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 5),
-                  child: Container(child: const Text('Please Sign In To Continue',
+               const Padding(
+                  padding:  EdgeInsets.symmetric(horizontal: 5),
+                  child:  Text('Please Sign In To Continue',
                   style:
-                   TextStyle(fontWeight: FontWeight.normal,fontSize: 16,color: Colors.black87),),),
+                   TextStyle(fontWeight: FontWeight.normal,fontSize: 16,color: Colors.black87),),
                 ),
                 const SizedBox(height: 20,),
        inputField('EMAIL', emailController, emailError),
@@ -67,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
                  iconData: Icons.arrow_forward,
                  onTap: (){
                   //TODO :CHECK WHETHER USER IS REGISTERED
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> const AddBudgetCategory()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>  AddBudgetCategory()));
                 },
                ),
        )
@@ -83,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
       ),
       floatingActionButton: Align(
   alignment: Alignment.bottomCenter,
-  child: Container(child: GestureDetector(
+  child: GestureDetector(
     onTap: (){
       Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=> const SignUpPage()));
     },
@@ -97,9 +93,7 @@ class _LoginPageState extends State<LoginPage> {
     ),
     
       ),
-  )
-  
-  ,),
+  ),
 )
 
 ,

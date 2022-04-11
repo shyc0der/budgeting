@@ -64,15 +64,13 @@ Widget inputField(String label, TextEditingController controller, bool error, {
                      primary: Colors.orange,
                      
                    ),
-                    child: Container(
-                     child: Row( 
-                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                       children: [
-                              Text(label,style:TextStyle(fontWeight: FontWeight.normal,fontSize: height)),
-                              const Icon(Icons.arrow_forward),
-                              
-                              ]),
-                   )),
+                    child: Row( 
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                             Text(label,style:TextStyle(fontWeight: FontWeight.normal,fontSize: height)),
+                             const Icon(Icons.arrow_forward),
+                             
+                             ])),
                  ),
            );
 

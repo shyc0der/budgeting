@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:budget/src/input.dart';
 import 'package:budget/src/models/monthlyIncome.dart';
 import 'package:budget/src/modules/monthlyIncome.dart';
