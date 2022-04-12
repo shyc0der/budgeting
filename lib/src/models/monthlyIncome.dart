@@ -9,7 +9,7 @@ class MonthlyIncomeModel extends Model{
 
   String? id;
   String? salary;
-  String? extraIncome;
+  Map<String,double>? extraIncome;
   String? createdBy;
   late DateTime dateCreated;
   DateTime? month;

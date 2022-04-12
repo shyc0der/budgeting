@@ -17,7 +17,6 @@ class AddMonthlyIncome extends StatefulWidget {
 
 class _AddMonthlyIncomeState extends State<AddMonthlyIncome> {
   TextEditingController salaryController = TextEditingController();
-  TextEditingController extraIncomeController = TextEditingController();
   final MonthlyIncomeModule _monthlyIncomeModule = MonthlyIncomeModule();
 
   bool nameError = false;
@@ -75,20 +74,24 @@ class _AddMonthlyIncomeState extends State<AddMonthlyIncome> {
                 height: 10,
               ),
               //Amount Budgeted
-              inputField(
-                'EXTRA INCOME ',
-                extraIncomeController,
-                amountError,
-                isNumbers: true,
-                onChanged: (val) {
-                  if (val.isNotEmpty) {
-                    setState(() {
-                      amountError = false;
-                    });
-                  }
-                },
-              ),
-
+              // ADD A LIST OF INCOMES
+              // Name,Amount
+              ElevatedButton.icon(
+                  onPressed: () {
+                    print('button ppresssed 9999999999999999999999');
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return const Dialog(
+                            child: AddExtraIncome(),
+                          );
+                        });
+                  },
+                  icon: const Icon(Icons.add),
+                  label: const Text('ADD EXTRA INCOME')),
+              //TODO: ADD INCOME
+// add button
+//listview of the incomes
               //TODO: MONTH
               const SizedBox(height: 36),
               //Save
@@ -108,7 +111,7 @@ class _AddMonthlyIncomeState extends State<AddMonthlyIncome> {
                   alignment: Alignment.bottomRight,
                   child: CustomElavtedButton(
                     errorExists: errorExists,
-                    label: 'ADD BUDGET',
+                    label: 'ADD INCOME',
                     fontSize: 15,
                     onTap: () {
                       if (salaryController.text.isEmpty) {
@@ -117,12 +120,7 @@ class _AddMonthlyIncomeState extends State<AddMonthlyIncome> {
                         });
                         errorExists = true;
                       }
-                      if (extraIncomeController.text.isEmpty) {
-                        setState(() {
-                          amountError = true;
-                        });
-                        errorExists = true;
-                      }
+
                       if (!errorExists) {
                         addIncome();
                       }
@@ -143,7 +141,7 @@ class _AddMonthlyIncomeState extends State<AddMonthlyIncome> {
     });
     var res = await _monthlyIncomeModule.addIncome(MonthlyIncomeModel(
         salary: salaryController.text,
-        extraIncome: extraIncomeController.text,
+        //extraIncome: extraIncomeController.text,
         createdBy: 'Steady',
         dateCreated: DateTime.now()));
     if (res.status == ResponseType.success) {
@@ -157,5 +155,173 @@ class _AddMonthlyIncomeState extends State<AddMonthlyIncome> {
         backgroundColor: Colors.redAccent,
       ));
     }
+  }
+}
+
+class AddExtraIncome extends StatefulWidget {
+  const AddExtraIncome({Key? key}) : super(key: key);
+
+  @override
+  State<AddExtraIncome> createState() => _AddExtraIncomeState();
+}
+
+class _AddExtraIncomeState extends State<AddExtraIncome> {
+  TextEditingController extraIncomeController = TextEditingController();
+  TextEditingController extraIncomeAmountController = TextEditingController();
+  bool extraAmountError = false;
+  bool extraNameError = false;
+  bool errorExists = false;
+  final List<Map<String, dynamic>> asmap = [
+    {
+      'item': {'name': 'shopping', 'amount': 100},
+    }
+  ];
+  @override
+  void initState() {
+    asmap.clear();
+    super.initState();
+  }
+  void addItemsToList() {
+    
+    setState(() {
+      asmap.add({
+        'item': {
+          'name': extraIncomeController.text,
+          'amount': extraIncomeAmountController.text
+        }
+      });
+    });
+    extraIncomeAmountController.clear();
+    extraIncomeController.clear();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.orangeAccent,
+        title: const Text('Add Extra Income'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8),
+        child: Column(children: [
+          //INCOME NAME
+          inputField(
+            'Extra Income Description',
+            extraIncomeController,
+            extraNameError,
+            onChanged: (val) {
+              if (val.isNotEmpty) {
+                setState(() {
+                  extraNameError = false;
+                });
+              }
+            },
+          ),
+          //AMOUNT
+          inputField('Amount', extraIncomeAmountController, extraAmountError,
+              isNumbers: true, onChanged: (val) {
+            if (val.isNotEmpty) {
+              setState(() {
+                extraAmountError = false;
+              });
+            }
+          }),
+          const SizedBox(
+            height: 15,
+          ),
+
+          //ADD BUTTON
+          Align(
+            alignment: Alignment.bottomRight,
+            child: CustomElavtedButton(
+              errorExists: errorExists,
+              label: 'Add Exta Income',
+              fontSize: 15,
+              onTap: () {
+                if (extraIncomeAmountController.text.isEmpty) {
+                  setState(() {
+                    extraAmountError = true;
+                  });
+                  errorExists = true;
+                }
+                if (extraIncomeController.text.isEmpty) {
+                  setState(() {
+                    extraNameError = true;
+                  });
+                  errorExists = true;
+                }
+
+                if (!errorExists) {
+                  addItemsToList();
+                }
+              },
+            ),
+          ),
+          const SizedBox(
+            height: 25,
+          ),
+
+          Expanded(
+            child: Column(
+              children: [
+                const Text('INCOMES'),
+                Expanded(
+                    child: 
+                    asmap.isNotEmpty ?
+                    ListView.builder(
+                        //shrinkWrap: true,
+                        itemCount: asmap.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          
+                          return SingleChildScrollView(
+                            child: Card(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Dismissible(
+                                  key: UniqueKey(),
+                                  direction: DismissDirection.endToStart,
+                                  onDismissed: (_) {
+                                    setState(() {
+                                      asmap.removeAt(index);
+                                    });
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(asmap[index]['item']['name'] ),
+                                      Text(asmap[index]['item']['amount'].toString()
+                                          ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        }):  Container( 
+                          height: 10,
+                          child: const  Center(child: Text('Please Add Incomes'),),)
+                        ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: CustomElavtedButton(
+                    errorExists: errorExists,
+                    label: 'Save',
+                    fontSize: 15,
+                    onTap: () {
+                      print('LIST ADDED SUCCESFULLY');
+                    },
+                  ),
+                ),
+              ],
+            ),
+          )
+        ]),
+      ),
+    );
   }
 }
