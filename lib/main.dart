@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'src/pages/budgetCategoryPage/budgetCategoryPage.dart';
 import 'src/pages/monthlyIncomePage/addMonthlyIncome.dart';
+import 'src/pages/monthlyIncomePage/monthlyIncomeDetails.dart';
 
 
 
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: AddMonthlyIncome(),
+      home: MonthlyIncomeDetails(),
     );
   }
 }

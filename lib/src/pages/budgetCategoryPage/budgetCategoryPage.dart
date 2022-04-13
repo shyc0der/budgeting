@@ -18,7 +18,10 @@ class _BudgetCategoryPageState extends State<BudgetCategoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar:  AppBar(
+        backgroundColor: Colors.orangeAccent,
+        title: const Text('Budgets'),
+      ),
         body: SingleChildScrollView(
           //physics:const  NeverScrollableScrollPhysics(),
           child: Padding(
