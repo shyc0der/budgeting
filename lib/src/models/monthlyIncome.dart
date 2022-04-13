@@ -2,14 +2,14 @@ import 'package:budget/src/models/model.dart';
 
 class MonthlyIncomeModel extends Model{
   
-  MonthlyIncomeModel({this.id,this.salary,this.extraIncome,this.createdBy,DateTime? dateCreated,DateTime? month})
+  MonthlyIncomeModel({this.id,this.salary,this.extraIncome,this.createdBy,DateTime? dateCreated,this.month})
   :super('monthlyIncome'){
     this.dateCreated =dateCreated ?? DateTime.now();
   }
 
   String? id;
   String? salary;
-  Map<String,double>? extraIncome;
+  List <Map<String,dynamic>>? extraIncome;
   String? createdBy;
   late DateTime dateCreated;
   DateTime? month;
@@ -24,12 +24,11 @@ MonthlyIncomeModel.fromMap(Map map):super('monthlyIncome'){
 }
 Map<String,dynamic>asMap(){
   return{
-    'id': id,
     'salary': salary,
     'extraIncome': extraIncome,
     'createdBy': createdBy,
     'dateCreated': dateCreated.toIso8601String(),
-    //'month': month.toIso8601String(),
+    'month': month?.toIso8601String(),
   };
 }
 

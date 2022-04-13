@@ -5,6 +5,7 @@ import 'package:budget/src/models/monthlyIncome.dart';
 import 'package:budget/src/modules/monthlyIncome.dart';
 import 'package:budget/src/modules/responseModel.dart';
 import 'package:budget/src/pages/background_page.dart';
+import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -23,6 +24,20 @@ class _AddMonthlyIncomeState extends State<AddMonthlyIncome> {
   bool amountError = false;
   bool isLoading = false;
   bool errorExists = false;
+  late String selectedDate = DateTime.now().toString();
+  List<Map<String, dynamic>> _res = [
+    {
+      'item': {'name': 'shopping', 'amount': 100}
+    },
+  ];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _res.clear();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,28 +85,108 @@ class _AddMonthlyIncomeState extends State<AddMonthlyIncome> {
                   });
                 }
               }),
+
               const SizedBox(
                 height: 10,
               ),
+
+              // YEAR and MONTH
+              DateTimePicker(
+                initialValue: selectedDate.toString(),
+                firstDate: DateTime(2022),
+                lastDate: DateTime(2122),
+                dateLabelText: 'Date',
+                onChanged: (value) {
+                  setState(() {
+                    selectedDate = value;
+                  });
+                },
+                initialDatePickerMode: DatePickerMode.year,
+              ),
+
+              const SizedBox(
+                height: 10,
+              ),
+
               //Amount Budgeted
               // ADD A LIST OF INCOMES
               // Name,Amount
               ElevatedButton.icon(
-                  onPressed: () {
-                    print('button ppresssed 9999999999999999999999');
-                    showDialog(
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.orange,
+                  ),
+                  onPressed: () async {
+                    List<Map<String, dynamic>> res;
+
+                    res = await showDialog(
                         context: context,
                         builder: (BuildContext context) {
-                          return const Dialog(
+                          return Dialog(
                             child: AddExtraIncome(),
                           );
                         });
+                    setState(() {
+                      _res = res;
+                    });
                   },
                   icon: const Icon(Icons.add),
                   label: const Text('ADD EXTRA INCOME')),
               //TODO: ADD INCOME
 // add button
 //listview of the incomes
+              const SizedBox(
+                height: 12,
+              ),
+
+              Expanded(
+                  child: _res.isNotEmpty
+                      ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text('INCOMES'),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Expanded(
+                              child: ListView.builder(
+                                  itemCount: _res.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return SingleChildScrollView(
+                                      child: Card(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Dismissible(
+                                            key: UniqueKey(),
+                                            direction:
+                                                DismissDirection.endToStart,
+                                            onDismissed: (_) {
+                                              setState(() {
+                                                _res.removeAt(index);
+                                              });
+                                            },
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Text(_res[index]['item']['name']
+                                                    .toString()),
+                                                Text(_res[index]['item']
+                                                        ['amount']
+                                                    .toString()),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }),
+                            ),
+                          ],
+                        )
+                      : Container()),
               //TODO: MONTH
               const SizedBox(height: 36),
               //Save
@@ -139,11 +234,15 @@ class _AddMonthlyIncomeState extends State<AddMonthlyIncome> {
     setState(() {
       isLoading = true;
     });
+  
     var res = await _monthlyIncomeModule.addIncome(MonthlyIncomeModel(
         salary: salaryController.text,
-        //extraIncome: extraIncomeController.text,
+        extraIncome: _res,
         createdBy: 'Steady',
-        dateCreated: DateTime.now()));
+        month: DateTime.parse(selectedDate),
+        dateCreated: DateTime.now()
+        )
+        );
     if (res.status == ResponseType.success) {
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Income Added Sucessfully')));
@@ -181,8 +280,8 @@ class _AddExtraIncomeState extends State<AddExtraIncome> {
     asmap.clear();
     super.initState();
   }
+
   void addItemsToList() {
-    
     setState(() {
       asmap.add({
         'item': {
@@ -232,31 +331,47 @@ class _AddExtraIncomeState extends State<AddExtraIncome> {
           ),
 
           //ADD BUTTON
-          Align(
-            alignment: Alignment.bottomRight,
-            child: CustomElavtedButton(
-              errorExists: errorExists,
-              label: 'Add Exta Income',
-              fontSize: 15,
-              onTap: () {
-                if (extraIncomeAmountController.text.isEmpty) {
-                  setState(() {
-                    extraAmountError = true;
-                  });
-                  errorExists = true;
-                }
-                if (extraIncomeController.text.isEmpty) {
-                  setState(() {
-                    extraNameError = true;
-                  });
-                  errorExists = true;
-                }
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Align(
+                alignment: Alignment.bottomLeft,
+                child: CustomElavtedButton(
+                  errorExists: errorExists,
+                  label: 'CANCEL',
+                  fontSize: 15,
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomRight,
+                child: CustomElavtedButton(
+                  errorExists: errorExists,
+                  label: 'Add Exta Income',
+                  fontSize: 15,
+                  onTap: () {
+                    if (extraIncomeAmountController.text.isEmpty) {
+                      setState(() {
+                        extraAmountError = true;
+                      });
+                      errorExists = true;
+                    }
+                    if (extraIncomeController.text.isEmpty) {
+                      setState(() {
+                        extraNameError = true;
+                      });
+                      errorExists = true;
+                    }
 
-                if (!errorExists) {
-                  addItemsToList();
-                }
-              },
-            ),
+                    if (!errorExists) {
+                      addItemsToList();
+                    }
+                  },
+                ),
+              ),
+            ],
           ),
           const SizedBox(
             height: 25,
@@ -267,42 +382,43 @@ class _AddExtraIncomeState extends State<AddExtraIncome> {
               children: [
                 const Text('INCOMES'),
                 Expanded(
-                    child: 
-                    asmap.isNotEmpty ?
-                    ListView.builder(
-                        //shrinkWrap: true,
-                        itemCount: asmap.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          
-                          return SingleChildScrollView(
-                            child: Card(
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Dismissible(
-                                  key: UniqueKey(),
-                                  direction: DismissDirection.endToStart,
-                                  onDismissed: (_) {
-                                    setState(() {
-                                      asmap.removeAt(index);
-                                    });
-                                  },
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(asmap[index]['item']['name'] ),
-                                      Text(asmap[index]['item']['amount'].toString()
-                                          ),
-                                    ],
+                    child: asmap.isNotEmpty
+                        ? ListView.builder(
+                            //shrinkWrap: true,
+                            itemCount: asmap.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return SingleChildScrollView(
+                                child: Card(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Dismissible(
+                                      key: UniqueKey(),
+                                      direction: DismissDirection.endToStart,
+                                      onDismissed: (_) {
+                                        setState(() {
+                                          asmap.removeAt(index);
+                                        });
+                                      },
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(asmap[index]['item']['name']),
+                                          Text(asmap[index]['item']['amount']
+                                              .toString()),
+                                        ],
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
+                              );
+                            })
+                        : Container(
+                            height: 10,
+                            child: const Center(
+                              child: Text('Please Add Incomes'),
                             ),
-                          );
-                        }):  Container( 
-                          height: 10,
-                          child: const  Center(child: Text('Please Add Incomes'),),)
-                        ),
+                          )),
                 const SizedBox(
                   height: 5,
                 ),
@@ -313,7 +429,7 @@ class _AddExtraIncomeState extends State<AddExtraIncome> {
                     label: 'Save',
                     fontSize: 15,
                     onTap: () {
-                      print('LIST ADDED SUCCESFULLY');
+                      Navigator.of(context).pop(asmap);
                     },
                   ),
                 ),
