@@ -16,13 +16,40 @@ class MonthlyIncomeDetails extends StatefulWidget {
 
 class _MonthlyIncomeDetailsState extends State<MonthlyIncomeDetails> {
   final MonthlyIncomeModule _monthlyIncomeModule = MonthlyIncomeModule();
+  List<Map<String, dynamic>> extraIncome = [
+    {
+      'item': {'name': 'shopping', 'amount': 100},
+    }
+  ];
+  //double _tt = 0;
+  @override
+  void initState() {
+    extraIncome.clear();
+
+    super.initState();
+  }
+
+  double get amount {
+    // var _res = extraIncome.fold<double>(
+    //     0,
+    //     (previousValue, _extraInc) =>
+    //         previousValue +
+    //         (double.tryParse(_extraInc['item']['amount'].toString()) ?? 0));
+
+    double _tt = 0;
+    for (var _extraInc in extraIncome) {
+      _tt + (double.tryParse(_extraInc['item']['amount'].toString()) ?? 0);
+    }
+    return _tt;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:  AppBar(
-        backgroundColor: Colors.orangeAccent,
-        title: const Text('MONTHLY INCOMES'),
-      ),
+        appBar: AppBar(
+          backgroundColor: Colors.orangeAccent,
+          title: const Text('MONTHLY INCOMES'),
+        ),
         body: SingleChildScrollView(
           //physics: const NeverScrollableScrollPhysics(),
           child: Column(
@@ -42,7 +69,17 @@ class _MonthlyIncomeDetailsState extends State<MonthlyIncomeDetails> {
                             shrinkWrap: true,
                             itemCount: (snapshot.data ?? []).length,
                             itemBuilder: (context, index) {
-                              
+                              extraIncome = snapshot.data![index].extraIncome!;
+                              double _tt = 0;
+                              for (var _extraInc in extraIncome) {
+                                _tt=_tt +
+                                    (double.tryParse(_extraInc['item']['amount']
+                                            .toString()) ??
+                                        0);
+
+                              }
+
+
                               switch (snapshot.connectionState) {
                                 case ConnectionState.waiting:
                                   return const LinearProgressIndicator();
@@ -55,12 +92,14 @@ class _MonthlyIncomeDetailsState extends State<MonthlyIncomeDetails> {
                                             .data![index].month
                                             .toString()))),
                                     subtitle: Text(
-                                        'Ksh. ${snapshot.data![index].salary ?? ''}'),
+                                        'Main Income : Ksh. ${snapshot.data![index].salary ?? ''}'),
                                     trailing: Text(DateTime.parse(snapshot
                                             .data![index].month
                                             .toString())
                                         .year
                                         .toString()),
+                                    title: Text(
+                                        'Total Income : Ksh. ${(double.tryParse(snapshot.data![index].salary.toString()) ?? 0) + _tt}'),
                                   );
                               }
                             });

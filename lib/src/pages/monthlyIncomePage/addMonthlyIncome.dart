@@ -11,6 +11,7 @@ import 'package:get/get.dart';
 
 class AddMonthlyIncome extends StatefulWidget {
   const AddMonthlyIncome({Key? key}) : super(key: key);
+  fina; 
 
   @override
   _AddMonthlyIncomeState createState() => _AddMonthlyIncomeState();
@@ -122,7 +123,9 @@ class _AddMonthlyIncomeState extends State<AddMonthlyIncome> {
                         context: context,
                         builder: (BuildContext context) {
                           return Dialog(
-                            child: AddExtraIncome(),
+                            child: AddExtraIncome(
+                              currentExtraIncomes: _res,
+                            ),
                           );
                         });
                     setState(() {
@@ -234,15 +237,13 @@ class _AddMonthlyIncomeState extends State<AddMonthlyIncome> {
     setState(() {
       isLoading = true;
     });
-  
+
     var res = await _monthlyIncomeModule.addIncome(MonthlyIncomeModel(
         salary: salaryController.text,
         extraIncome: _res,
         createdBy: 'Steady',
         month: DateTime.parse(selectedDate),
-        dateCreated: DateTime.now()
-        )
-        );
+        dateCreated: DateTime.now()));
     if (res.status == ResponseType.success) {
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Income Added Sucessfully')));
@@ -258,7 +259,8 @@ class _AddMonthlyIncomeState extends State<AddMonthlyIncome> {
 }
 
 class AddExtraIncome extends StatefulWidget {
-  const AddExtraIncome({Key? key}) : super(key: key);
+  const AddExtraIncome({this.currentExtraIncomes, Key? key}) : super(key: key);
+  final List<Map<String, dynamic>>? currentExtraIncomes;
 
   @override
   State<AddExtraIncome> createState() => _AddExtraIncomeState();
@@ -278,6 +280,21 @@ class _AddExtraIncomeState extends State<AddExtraIncome> {
   @override
   void initState() {
     asmap.clear();
+    if (widget.currentExtraIncomes != null) {
+      asmap.addAll(widget.currentExtraIncomes!);
+    }
+
+    var _res = asmap.fold<double>(
+        0,
+        (previousValue, _extraInc) =>
+            previousValue +
+            (double.tryParse(_extraInc['item']['amount'].toString()) ?? 0));
+
+    double _tt = 0;
+    for (var _extraInc in asmap) {
+      _tt + (double.tryParse(_extraInc['item']['amount'].toString()) ?? 0);
+    }
+
     super.initState();
   }
 
