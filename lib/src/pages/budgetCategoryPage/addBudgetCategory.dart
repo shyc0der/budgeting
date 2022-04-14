@@ -210,7 +210,8 @@ class _AddBudgetCategoryState extends State<AddBudgetCategory> {
       ));
       // back
       Navigator.pop(context);
-    } else {
+    } 
+    else {
       Get.showSnackbar(GetSnackBar(
         title: 'Error',
         message: res.body.toString(),

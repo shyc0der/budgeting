@@ -86,20 +86,28 @@ class _MonthlyIncomeDetailsState extends State<MonthlyIncomeDetails> {
                                 case ConnectionState.none:
                                   return const Text('No data');
                                 default:
-                                  return ListTile(
-                                    leading: Text(DateFormat("MMMM").format(
-                                        DateTime.parse(snapshot
-                                            .data![index].month
-                                            .toString()))),
-                                    subtitle: Text(
-                                        'Main Income : Ksh. ${snapshot.data![index].salary ?? ''}'),
-                                    trailing: Text(DateTime.parse(snapshot
-                                            .data![index].month
-                                            .toString())
-                                        .year
-                                        .toString()),
-                                    title: Text(
-                                        'Total Income : Ksh. ${(double.tryParse(snapshot.data![index].salary.toString()) ?? 0) + _tt}'),
+                                  return GestureDetector(
+                                    onTap: () {
+                              Navigator.push(context, MaterialPageRoute(
+                              builder: (BuildContext context) =>                             
+                              AddMonthlyIncome(isEditing: true,incomeModel: snapshot.data?[index])                              
+                              ));
+                          },
+                                    child: ListTile(
+                                      leading: Text(DateFormat("MMMM").format(
+                                          DateTime.parse(snapshot
+                                              .data![index].month
+                                              .toString()))),
+                                      subtitle: Text(
+                                          'Main Income : Ksh. ${snapshot.data![index].salary ?? ''}'),
+                                      trailing: Text(DateTime.parse(snapshot
+                                              .data![index].month
+                                              .toString())
+                                          .year
+                                          .toString()),
+                                      title: Text(
+                                          'Total Income : Ksh. ${(double.tryParse(snapshot.data![index].salary.toString()) ?? 0) + _tt}'),
+                                    ),
                                   );
                               }
                             });

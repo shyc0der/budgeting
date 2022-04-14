@@ -10,8 +10,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AddMonthlyIncome extends StatefulWidget {
-  const AddMonthlyIncome({Key? key}) : super(key: key);
-  fina; 
+  const AddMonthlyIncome({this.incomeModel, this.isEditing = false, Key? key})
+      : super(key: key);
+  final bool isEditing;
+  final MonthlyIncomeModel? incomeModel;
 
   @override
   _AddMonthlyIncomeState createState() => _AddMonthlyIncomeState();
@@ -36,6 +38,11 @@ class _AddMonthlyIncomeState extends State<AddMonthlyIncome> {
   void initState() {
     // TODO: implement initState
     _res.clear();
+    if (widget.isEditing) {
+      salaryController.text = widget.incomeModel?.salary ?? '';
+      selectedDate = (widget.incomeModel?.month ?? DateTime.now()).toString();
+      _res = widget.incomeModel!.extraIncome!;
+    }
     super.initState();
   }
 
@@ -67,9 +74,9 @@ class _AddMonthlyIncomeState extends State<AddMonthlyIncome> {
                 height: 60,
               ),
               //Text
-              const Text(
-                'ADD MONTHLY INCOME',
-                style: TextStyle(
+              Text(
+                '${widget.isEditing ? 'EDIT' : 'ADD'} MONTHLY INCOME',
+                style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 23,
                     color: Colors.black),
@@ -209,7 +216,7 @@ class _AddMonthlyIncomeState extends State<AddMonthlyIncome> {
                   alignment: Alignment.bottomRight,
                   child: CustomElavtedButton(
                     errorExists: errorExists,
-                    label: 'ADD INCOME',
+                    label: '${widget.isEditing ? 'EDIT' : 'ADD'} INCOME',
                     fontSize: 15,
                     onTap: () {
                       if (salaryController.text.isEmpty) {
@@ -220,7 +227,7 @@ class _AddMonthlyIncomeState extends State<AddMonthlyIncome> {
                       }
 
                       if (!errorExists) {
-                        addIncome();
+                        widget.isEditing ? editIncome() : addIncome();
                       }
                     },
                   ),
@@ -256,6 +263,35 @@ class _AddMonthlyIncomeState extends State<AddMonthlyIncome> {
       ));
     }
   }
+
+  void editIncome() async {
+    setState(() {
+      isLoading = true;
+    });
+    var res = await 
+        _monthlyIncomeModule.updateIncome((widget.incomeModel?.id ?? ''), {
+          'salary' :salaryController.text,
+          'month' : selectedDate,
+          'extraIncome' : _res,
+        });
+  
+    if (res.status == ResponseType.success) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("Monthly Income Updated!"),
+      ));
+      // back
+      Navigator.pop(context);
+    } 
+    else {
+      Get.showSnackbar(GetSnackBar(
+        title: 'Error',
+        message: res.body.toString(),
+        backgroundColor: Colors.redAccent,
+      ));
+    }
+  
+  }
+  
 }
 
 class AddExtraIncome extends StatefulWidget {
