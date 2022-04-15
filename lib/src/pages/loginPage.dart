@@ -62,7 +62,6 @@ class _LoginPageState extends State<LoginPage> {
                  fontSize: 20,
                  iconData: Icons.arrow_forward,
                  onTap: (){
-                  //TODO :CHECK WHETHER USER IS REGISTERED
                   Navigator.push(context, MaterialPageRoute(builder: (context)=>  AddBudgetCategory()));
                 },
                ),

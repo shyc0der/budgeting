@@ -36,7 +36,6 @@ class _AddMonthlyIncomeState extends State<AddMonthlyIncome> {
 
   @override
   void initState() {
-    // TODO: implement initState
     _res.clear();
     if (widget.isEditing) {
       salaryController.text = widget.incomeModel?.salary ?? '';
@@ -141,9 +140,7 @@ class _AddMonthlyIncomeState extends State<AddMonthlyIncome> {
                   },
                   icon: const Icon(Icons.add),
                   label: const Text('ADD EXTRA INCOME')),
-              //TODO: ADD INCOME
-// add button
-//listview of the incomes
+            
               const SizedBox(
                 height: 12,
               ),
@@ -197,7 +194,7 @@ class _AddMonthlyIncomeState extends State<AddMonthlyIncome> {
                           ],
                         )
                       : Container()),
-              //TODO: MONTH
+              
               const SizedBox(height: 36),
               //Save
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
@@ -466,12 +463,9 @@ class _AddExtraIncomeState extends State<AddExtraIncome> {
                                 ),
                               );
                             })
-                        : Container(
-                            height: 10,
-                            child: const Center(
-                              child: Text('Please Add Incomes'),
-                            ),
-                          )),
+                        : const Center(
+                          child: Text('Please Add Incomes'),
+                        )),
                 const SizedBox(
                   height: 5,
                 ),

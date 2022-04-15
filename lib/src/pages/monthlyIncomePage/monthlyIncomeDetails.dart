@@ -2,7 +2,6 @@
 
 import 'package:budget/src/models/monthlyIncome.dart';
 import 'package:budget/src/modules/monthlyIncome.dart';
-import 'package:budget/src/pages/background_page.dart';
 import 'package:budget/src/pages/monthlyIncomePage/addMonthlyIncome.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
