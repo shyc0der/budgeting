@@ -1,37 +1,38 @@
 import 'package:budget/src/models/model.dart';
 
-class ExpenseModel extends Model{
-
-  ExpenseModel ({this.budgetCategory,this.id,this.item,this.createdBy,DateTime? dateCreated,this.totalAmount}):super('expenses')
-  {
-    this.dateCreated=dateCreated ?? DateTime.now();
+class ExpenseModel extends Model {
+  ExpenseModel({
+    this.expenses,
+    this.id,
+    this.month,
+    this.createdBy,
+    DateTime? dateCreated,
+  }) : super('expenses') {
+    this.dateCreated = dateCreated ?? DateTime.now();
   }
 
-String? id;
-String? budgetCategory;
-String? item;
-String? totalAmount;
-late DateTime dateCreated;
-String? createdBy;
+  String? id;
+  DateTime? month;
+  List<Map<String, dynamic>>? expenses;
+  late DateTime dateCreated;
+  String? createdBy;
 
-ExpenseModel.fromMap(Map map):super('expenses'){  
-    id =map['id'];
-    budgetCategory =map['budgetCategory'];
-    item =map['item'];
-    totalAmount =map['totalAmount'];
-    dateCreated =DateTime.tryParse(map['dateCreated'].toString()) ?? DateTime.now();
-    createdBy =map['createdBy'];  
-}
-Map<String,dynamic> asMap(){
-  return{
-    'id': id,
-    'budgetCategory': budgetCategory,
-    'item': item,
-    'totalAmount': totalAmount,
-    'dateCreated': dateCreated.toIso8601String(),
-    'createdBy': createdBy,
-
-  };
-}
-
+  ExpenseModel.fromMap(Map map) : super('expenses') {
+    id = map['id'];
+    month = DateTime.tryParse(map['month'].toString());
+    expenses = List.from(map['expenses'])
+        .map((e) => Map<String, dynamic>.from(e))
+        .toList();
+    dateCreated =
+        DateTime.tryParse(map['dateCreated'].toString()) ?? DateTime.now();
+    createdBy = map['createdBy'];
+  }
+  Map<String, dynamic> asMap() {
+    return {
+      'expenses': expenses,
+      'month': month?.toIso8601String(),
+      'dateCreated': dateCreated.toIso8601String(),
+      'createdBy': createdBy,
+    };
+  }
 }
