@@ -7,7 +7,7 @@ class ExpenseModel extends Model {
     this.month,
     this.createdBy,
     DateTime? dateCreated,
-  }) : super('expenses') {
+  }) : super('expenses','expenses') {
     this.dateCreated = dateCreated ?? DateTime.now();
   }
 
@@ -17,7 +17,7 @@ class ExpenseModel extends Model {
   late DateTime dateCreated;
   String? createdBy;
 
-  ExpenseModel.fromMap(Map map) : super('expenses') {
+  ExpenseModel.fromMap(Map map) : super('expenses','expenses') {
     id = map['id'];
     month = DateTime.tryParse(map['month'].toString());
     expenses = List.from(map['expenses'])

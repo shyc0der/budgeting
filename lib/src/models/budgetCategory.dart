@@ -8,7 +8,7 @@ class BudgetCategoryModel extends Model {
       this.createdBy,
       this.month,
       DateTime? dateCreated})
-      : super('budgetCategory') {
+      : super('budgetCategory','') {
     this.dateCreated = dateCreated ?? DateTime.now();
   }
   String? id;
@@ -17,7 +17,7 @@ class BudgetCategoryModel extends Model {
   late DateTime dateCreated;
   DateTime?  month;
   String? createdBy;
-  BudgetCategoryModel.fromMap(Map map) : super('budgetCategory') {
+  BudgetCategoryModel.fromMap(Map map) : super('budgetCategory','') {
     id = map['id'];
     name = map['name'];
     amountBudgeted = map['amountBudgeted'];

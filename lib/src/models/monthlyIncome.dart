@@ -8,7 +8,7 @@ class MonthlyIncomeModel extends Model {
       this.createdBy,
       DateTime? dateCreated,
       this.month})
-      : super('monthlyIncome') {
+      : super('monthlyIncome','extraIncome') {
     this.dateCreated = dateCreated ?? DateTime.now();
   }
 
@@ -19,7 +19,7 @@ class MonthlyIncomeModel extends Model {
   late DateTime dateCreated;
   DateTime? month;
 
-  MonthlyIncomeModel.fromMap(Map map) : super('monthlyIncome') {
+  MonthlyIncomeModel.fromMap(Map map) : super('monthlyIncome','extraIncome') {
     id = map['id'];
     salary = map['salary'];
     extraIncome =

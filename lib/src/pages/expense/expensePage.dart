@@ -4,6 +4,8 @@ import 'package:budget/src/pages/expense/addExpensePage.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import 'expenseDetailPage.dart';
+
 class ExpensesPage extends StatefulWidget {
   const ExpensesPage({Key? key}) : super(key: key);
 
@@ -21,6 +23,7 @@ class _ExpensesPageState extends State<ExpensesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.brown[50],
         appBar: AppBar(
           backgroundColor: Colors.orangeAccent,
           title: const Text('Expenses'),
@@ -45,7 +48,6 @@ class _ExpensesPageState extends State<ExpensesPage> {
                               shrinkWrap: true,
                               itemCount: (snapshot.data ?? []).length,
                               itemBuilder: (context, index) {
-                               print( snapshot.data![index].expenses?[0]['item']['expense']);
                                 eExpenses = snapshot.data![index].expenses!;
                                 double _tt = 0;
                                 for (var _extraInc in eExpenses) {
@@ -69,10 +71,9 @@ class _ExpensesPageState extends State<ExpensesPage> {
                                             MaterialPageRoute(
                                                 builder: (BuildContext
                                                         context) =>
-                                                    AddExpense(
-                                                        isEditing: true,
+                                                    ExpenseDetailsPage(
                                                         expenseModel: snapshot
-                                                            .data?[index])));
+                                                            .data?[index],total: _tt,)));
                                       },
                                       child: ListTile(
                                         leading: Text(DateFormat("MMMM").format(

@@ -49,6 +49,7 @@ class _AddExpenseState extends State<AddExpense> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.brown[50],
         body: Stack(
       children: [
         const BackgroundPage(),
@@ -177,14 +178,13 @@ class _AddExpenseState extends State<AddExpense> {
                                       child: Card(
                                         child: Dismissible(
                                           key: UniqueKey(),
-                                          onDismissed: (_) {
-                                            widget.isEditing
-                                                ? _expenseModule.deleteExpenses(
-                                                    widget.expenseModel!
-                                                            .expenses?[index]
-                                                        ['item'])
-                                                : expenseTypesAmount
-                                                    .removeAt(index);
+                                          onDismissed: (_) async{
+                                            
+                                            await _expenseModule
+                                                .deleteExpenseExpenses(
+                                                    (widget.expenseModel!.id!),
+                                                    index.toString());
+                                                    
                                           },
                                           child: Row(
                                             mainAxisAlignment:

@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 class Model{
-  Model(this.collectionName);
+  Model(this.collectionName,this.collection2);
   String collectionName;
+  String? collection2;
 
   //initialize firestore
   final FirebaseFirestore firestore=FirebaseFirestore.instance;
@@ -40,6 +41,10 @@ class Model{
    //delete data
    Future deleteOnline(String _id) async{
      await firestore.collection(collectionName).doc(_id).delete();
+   }
+   //delete list
+    Future deleteCollection(String _id,String id) async{      
+     await firestore.collection(collectionName).doc(_id).collection(collection2!).doc(id).delete();
    }
    //fetch all data
    //return a list of data
