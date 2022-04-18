@@ -22,28 +22,19 @@ class _FirstPageState extends State<FirstPage> {
              crossAxisAlignment: CrossAxisAlignment.start,
              children: [
                Expanded(
-                 child: GridView.extent(maxCrossAxisExtent: 1,
-                 padding: const EdgeInsets.all(4),
-                 mainAxisSpacing: 4,
-                 crossAxisSpacing: 4,
-                 children:  [
-                   Card(
-                     child: Column(children: [
-                       Text('jjjjjjjjjjjjjjjjjjj'),
-                       //image
-                       Image.asset('assets/images/budget.png',height: 100,
-                       width: 100,)
-                      
-                     // Total Amount as of feb
-                       //
+                 child: GridView(
+                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+                   children: [
+                      Image.asset('assets/images/budget.png',height: 30,
+                       width: 30,),
+                       Image.asset('assets/images/budget.png',height: 30,
+                       width: 30,),
+                       Image.asset('assets/images/budget.png',height: 30,
+                       width: 30,)
+                   ],
+                   ),
 
-                     ],),
-                   )
-
-                 ],
-
-                 ),
-               )
+                )
              ],
            ),
          )
