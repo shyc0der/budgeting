@@ -1,8 +1,8 @@
 import 'package:budget/src/pages/budgetCategoryPage/budgetCategoryPage.dart';
 import 'package:budget/src/pages/expense/expensePage.dart';
 import 'package:budget/src/pages/monthlyIncomePage/monthlyIncomePage.dart';
+import 'package:budget/src/shared.dart';
 import 'package:flutter/material.dart';
-
 
 import 'background_page.dart';
 
@@ -14,120 +14,65 @@ class FirstPage extends StatefulWidget {
 }
 
 class _FirstPageState extends State<FirstPage> {
+  PageController _controller = PageController(initialPage: 0);
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(children: [
-        const BackgroundPage(),
-        Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(
-                height: 100,
-              ),
-              IconButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  icon: const Icon(
-                    Icons.arrow_back,
-                    color: Colors.black87,
-                    size: 27,
-                  )),
-              const SizedBox(
-                height: 40,
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 20,bottom: 10),
-                  child: Wrap(
-                    spacing: 20.0,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 10),
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        BudgetCategoryPage()));
-                          },
-                          child: Column(
+      appBar: AppBar(
+        backgroundColor: Colors.orangeAccent,
+        title: const Text('BUDGET APP'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.only(top: 20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 20, bottom: 10),
+                child: PageView(
+                  controller: _controller,
                             children: [
-                              Image.asset(
-                                'assets/images/budget.png',
-                                width: 100,
-                              ),
-                              const Text(
-                                'BUDGET',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 20,
-                        height: 40,
-                      ),
-                      Padding(                       
-                        padding: const EdgeInsets.only(bottom: 10),
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const ExpensesPage()));
-                          },
-                          child: Column(
-                            children: [
-                              Image.asset(
-                                'assets/images/budget.png',
-                                width: 100,
-                              ),
-                              const Text(
-                                'EXPENSES',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 20, height: 40),
-                      Padding(                        
-                        padding: const EdgeInsets.only(bottom: 10),
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const  MonthlyIncomePage()));
-                          },
-                          child: Column(
-                            children: [
-                              Image.asset(
-                                'assets/images/budget.png',
-                                width: 100,
-                              ),
-                              const Text(
-                                'INCOMES',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              )
-                            ],
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
+                    //BUDGET
+                    ImageText(
+                      "BUDGET",
+                      'assets/images/budget.png',
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    BudgetCategoryPage()));
+                      },
+                    ),
+                    ImageText("EXPENSES", 'assets/images/expense.png',
+                        onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ExpensesPage()));
+                    }),
+                    ImageText("INCOMES", 'assets/images/revenue.png',
+                        onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const MonthlyIncomePage()));
+                    })
+                  ],
                 ),
               ),
-            ],
-          ),
-        )
-      ]),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -73,6 +73,10 @@ flutter:
 
   assets:
     - assets/images/budget.png
+    - assets/images/expense.png
+    - assets/images/expenses.png
+    - assets/images/revenue.png
+    - assets/images/salary.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:
