@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:budget/src/pages/budgetCategoryPage/budgetCategoryPage.dart';
 import 'package:budget/src/pages/expense/expensePage.dart';
 import 'package:budget/src/pages/monthlyIncomePage/monthlyIncomePage.dart';
@@ -13,8 +15,16 @@ class FirstPage extends StatefulWidget {
   State<FirstPage> createState() => _FirstPageState();
 }
 
-class _FirstPageState extends State<FirstPage> {
-  PageController _controller = PageController(initialPage: 0);
+class _FirstPageState extends State<FirstPage> with SingleTickerProviderStateMixin {
+  late TabController  _controller;
+  int selectedIndex = 0;
+
+  @override
+  void initState() {
+    _controller = TabController(initialIndex: 0, length: 3, vsync: this);
+    super.initState();
+  }
+
   @override
   void dispose() {
     _controller.dispose();
@@ -23,53 +33,41 @@ class _FirstPageState extends State<FirstPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.orangeAccent,
-        title: const Text('BUDGET APP'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 20, bottom: 10),
-                child: PageView(
-                  controller: _controller,
-                            children: [
-                    //BUDGET
-                    ImageText(
-                      "BUDGET",
-                      'assets/images/budget.png',
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    BudgetCategoryPage()));
-                      },
-                    ),
-                    ImageText("EXPENSES", 'assets/images/expense.png',
-                        onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const ExpensesPage()));
-                    }),
-                    ImageText("INCOMES", 'assets/images/revenue.png',
-                        onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  const MonthlyIncomePage()));
-                    })
-                  ],
-                ),
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        appBar: AppBar(
+            backgroundColor: Colors.orangeAccent,
+            title: const Text('Budget App'),
+            bottom: TabBar
+            (controller: _controller,
+            //padding: EdgeInsets.all(19),
+               tabs: [
+              Tab(  
+                             
+                icon: Image.asset('assets/images/budget.png',height: 43,),  
+                text: 'BUDGETS',           
+                
+                
               ),
-            ),
+              Tab(
+                icon: Image.asset('assets/images/expense.png',height: 43,),
+               text: 'EXPENSES',
+              ),
+              Tab(
+                icon: Image.asset('assets/images/revenue.png',height: 43,),
+                text: 'INCOMES',
+              ),
+            ])),
+        body: TabBarView(
+          controller: _controller,
+          children: <Widget>[
+            //BUDGET
+            
+            BudgetCategoryPage(),
+            ExpensesPage(),
+            MonthlyIncomePage()
+            
           ],
         ),
       ),

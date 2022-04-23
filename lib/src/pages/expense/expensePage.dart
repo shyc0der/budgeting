@@ -7,7 +7,7 @@ import 'package:intl/intl.dart';
 import 'expenseDetailPage.dart';
 
 class ExpensesPage extends StatefulWidget {
-  const ExpensesPage({Key? key}) : super(key: key);
+   ExpensesPage({Key? key}) : super(key: key);
 
   @override
   State<ExpensesPage> createState() => _ExpensesPageState();
@@ -24,16 +24,15 @@ class _ExpensesPageState extends State<ExpensesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.brown[50],
-        appBar: AppBar(
-          backgroundColor: Colors.orangeAccent,
-          title: const Text('Expenses'),
-        ),
+        
         body: SingleChildScrollView(
           //physics:const  NeverScrollableScrollPhysics(),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                const   Text("EXPENSES",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17),),
                 StreamBuilder<List<ExpenseModel>>(
                     stream: _expenseModule.fetchExpenses(),
                     builder: (context, snapshot) {

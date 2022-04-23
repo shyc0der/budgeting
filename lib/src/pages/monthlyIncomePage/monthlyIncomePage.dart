@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class MonthlyIncomePage extends StatefulWidget {
-  const MonthlyIncomePage({Key? key}) : super(key: key);
+  MonthlyIncomePage({Key? key}) : super(key: key);
 
   @override
   _MonthlyIncomePageState createState() => _MonthlyIncomePageState();
@@ -46,75 +46,76 @@ class _MonthlyIncomePageState extends State<MonthlyIncomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.orangeAccent,
-          title: const Text('MONTHLY INCOMES'),
-        ),
+        
         body: SingleChildScrollView(
           //physics: const NeverScrollableScrollPhysics(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              StreamBuilder<List<MonthlyIncomeModel>>(
-                  stream: _monthlyIncomeModule.fetchIncome(),
-                  builder: (context, snapshot) {
-                    switch (snapshot.connectionState) {
-                      case ConnectionState.waiting:
-                        return const LinearProgressIndicator();
-                      case ConnectionState.none:
-                        return const Text('NO DATA');
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const   Text("MONTHLY INCOME",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17),),
+                StreamBuilder<List<MonthlyIncomeModel>>(
+                    stream: _monthlyIncomeModule.fetchIncome(),
+                    builder: (context, snapshot) {
+                      switch (snapshot.connectionState) {
+                        case ConnectionState.waiting:
+                          return const LinearProgressIndicator();
+                        case ConnectionState.none:
+                          return const Text('NO DATA');
 
-                      default:
-                        return ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: (snapshot.data ?? []).length,
-                            itemBuilder: (context, index) {
-                              extraIncome = snapshot.data![index].extraIncome!;
-                              double _tt = 0;
-                              for (var _extraInc in extraIncome) {
-                                _tt=_tt +
-                                    (double.tryParse(_extraInc['item']['amount']
-                                            .toString()) ??
-                                        0);
+                        default:
+                          return ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: (snapshot.data ?? []).length,
+                              itemBuilder: (context, index) {
+                                extraIncome = snapshot.data![index].extraIncome!;
+                                double _tt = 0;
+                                for (var _extraInc in extraIncome) {
+                                  _tt=_tt +
+                                      (double.tryParse(_extraInc['item']['amount']
+                                              .toString()) ??
+                                          0);
 
-                              }
+                                }
 
 
-                              switch (snapshot.connectionState) {
-                                case ConnectionState.waiting:
-                                  return const LinearProgressIndicator();
-                                case ConnectionState.none:
-                                  return const Text('No data');
-                                default:
-                                  return GestureDetector(
-                                    onTap: () {
-                              Navigator.push(context, MaterialPageRoute(
-                              builder: (BuildContext context) =>                             
-                              MonthlyIncomeDetails(incomeModel: snapshot.data?[index],total: _tt,)                              
-                              ));
-                          },
-                                    child: ListTile(
-                                      leading: Text(DateFormat("MMMM").format(
-                                          DateTime.parse(snapshot
-                                              .data![index].month
-                                              .toString()))),
-                                      subtitle: Text(
-                                          'Main Income : Ksh. ${snapshot.data![index].salary ?? ''}'),
-                                      trailing: Text(DateTime.parse(snapshot
-                                              .data![index].month
-                                              .toString())
-                                          .year
-                                          .toString()),
-                                      title: Text(
-                                          'Total Income : Ksh. ${(double.tryParse(snapshot.data![index].salary.toString()) ?? 0) + _tt}'),
-                                    ),
-                                  );
-                              }
-                            });
-                    }
-                  }),
-            
-            ],
+                                switch (snapshot.connectionState) {
+                                  case ConnectionState.waiting:
+                                    return const LinearProgressIndicator();
+                                  case ConnectionState.none:
+                                    return const Text('No data');
+                                  default:
+                                    return GestureDetector(
+                                      onTap: () {
+                                Navigator.push(context, MaterialPageRoute(
+                                builder: (BuildContext context) =>                             
+                                MonthlyIncomeDetails(incomeModel: snapshot.data?[index],total: _tt,)                              
+                                ));
+                            },
+                                      child: ListTile(
+                                        leading: Text(DateFormat("MMMM").format(
+                                            DateTime.parse(snapshot
+                                                .data![index].month
+                                                .toString()))),
+                                        subtitle: Text(
+                                            'Main Income : Ksh. ${snapshot.data![index].salary ?? ''}'),
+                                        trailing: Text(DateTime.parse(snapshot
+                                                .data![index].month
+                                                .toString())
+                                            .year
+                                            .toString()),
+                                        title: Text(
+                                            'Total Income : Ksh. ${(double.tryParse(snapshot.data![index].salary.toString()) ?? 0) + _tt}'),
+                                      ),
+                                    );
+                                }
+                              });
+                      }
+                    }),
+              
+              ],
+            ),
           ),
         ),
         floatingActionButton: FloatingActionButton(

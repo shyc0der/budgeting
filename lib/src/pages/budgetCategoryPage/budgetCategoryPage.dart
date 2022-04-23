@@ -18,17 +18,16 @@ class _BudgetCategoryPageState extends State<BudgetCategoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:  AppBar(
-        backgroundColor: Colors.orangeAccent,
-        title: const Text('Budgets'),
-      ),
+      
         body: SingleChildScrollView(
           //physics:const  NeverScrollableScrollPhysics(),
           child: Padding(
             
             padding: const EdgeInsets.all(8.0),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+             const   Text("MONTLY BUDGETS",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17),),
                 StreamBuilder<List<BudgetCategoryModel>>(
                     stream: _budgetCategoryModule.fetchBudgets(),
                     builder: (context, snapshot) {
