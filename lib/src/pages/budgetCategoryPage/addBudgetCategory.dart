@@ -25,11 +25,17 @@ class _AddBudgetCategoryState extends State<AddBudgetCategory> {
   bool amountError = false;
   bool isLoading = false;
   bool errorExists = false;
+  List<Map<String, dynamic>>  budgets = [
+    {
+      'item': {'budget': 'shopping', 'amount': 100},
+    }
+  ];
   @override
   void initState() {
+     budgets.clear();
+
     if (widget.isEditing) {
-      nameController.text = widget.budget?.name ?? '';
-      amountController.text = widget.budget?.amountBudgeted ?? '';
+      budgets = widget.budget!.budgets!;
       selectedDate = widget.budget!.month!.toString();
     }
 
@@ -64,6 +70,20 @@ class _AddBudgetCategoryState extends State<AddBudgetCategory> {
                 height: 60,
               ),
               //Text
+              DateTimePicker(
+                initialValue: selectedDate.toString(),
+                firstDate: DateTime(2022),
+                lastDate: DateTime(2122),
+                dateLabelText: 'Date',
+                onChanged: (value) {
+                  setState(() {
+                    selectedDate = value;
+                  });
+                },
+                initialDatePickerMode: DatePickerMode.year,
+              ),
+
+              const SizedBox(height: 36),
               Text(
                 widget.isEditing
                     ? 'EDIT BUDGET CATEGORY'
@@ -105,24 +125,82 @@ class _AddBudgetCategoryState extends State<AddBudgetCategory> {
 
               const SizedBox(height: 36),
               // YEAR and MONTH
-              DateTimePicker(
-                initialValue: selectedDate.toString(),
-                firstDate: DateTime(2022),
-                lastDate: DateTime(2122),
-                dateLabelText: 'Date',
-                onChanged: (value) {
-                  setState(() {
-                    selectedDate =value;
-                  });
-                },
-                initialDatePickerMode: DatePickerMode.year,
-              ),
+              ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.orange,
+                  ),
+                  onPressed: () async {
+                    if (amountController.text.isEmpty) {
+                      setState(() {
+                        amountError = true;
+                      });
+                      errorExists = true;
+                    }
+                    if (nameController.text.isEmpty) {
+                      setState(() {
+                        nameError = true;
+                      });
+                      errorExists = true;
+                    }
 
-              const SizedBox(height: 36),
-
+                    if (!errorExists) {
+                      addItemsToList();
+                    }
+                  },
+                  icon: const Icon(Icons.add),
+                  label: const Text('Add Budgets')),
+        
               //Save
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                Align(
+              budgets.isNotEmpty
+                  ? 
+                  Expanded(
+                 child: Padding(
+                   padding: const EdgeInsets.all(3.0),
+                   child: Column(
+                     crossAxisAlignment: CrossAxisAlignment.start,
+                     children: [
+                       const Text('Budgets'),
+                       const SizedBox(
+                         height: 5,
+                       ),
+                       Expanded(
+                         child: ListView.builder(
+                             itemCount: budgets.length,
+                             itemBuilder:
+                                 (BuildContext context, int index) {
+                               return SingleChildScrollView(
+                                 child: Card(
+                                   child: Dismissible(
+                                     key: UniqueKey(),
+                                     onDismissed: (_) async{
+                                       
+                                       //TODO DELETE BUDGETS
+                                               
+                                     },
+                                     child: Row(
+                                       mainAxisAlignment:
+                                           MainAxisAlignment.spaceBetween,
+                                       children: [
+                                         Text(
+                                           budgets[index]
+                                                   ['item']['budget']
+                                               .toString(),
+                                         ),
+                                         Text(budgets[index]
+                                                 ['item']['amount']
+                                             .toString())
+                                       ],
+                                     ),
+                                   ),
+                                 ),
+                               );
+                             }),
+                       ),
+                             Expanded(
+                               child: Row(
+                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                   children: [
+                                     Align(
                   alignment: Alignment.bottomLeft,
                   child: CustomElavtedButton(
                     errorExists: errorExists,
@@ -136,34 +214,47 @@ class _AddBudgetCategoryState extends State<AddBudgetCategory> {
                 Align(
                   alignment: Alignment.bottomRight,
                   child: CustomElavtedButton(
-                    errorExists: errorExists,
-                    label: widget.isEditing ? 'EDIT BUDGET' : 'ADD BUDGET',
-                    fontSize: 15,
-                    onTap: () {
-                      if (nameController.text.isEmpty) {
-                        setState(() {
-                          nameError = true;
-                        });
-                        errorExists = true;
-                      }
-                      if (amountController.text.isEmpty) {
-                        setState(() {
-                          amountError = true;
-                        });
-                        errorExists = true;
-                      }
-                      if (!errorExists) {
-                        widget.isEditing ? updateBudget() : addBudget();
-                      }
-                    },
+               errorExists: errorExists,
+               label: widget.isEditing ? 'EDIT BUDGET' : 'ADD BUDGET',
+               fontSize: 15,
+               onTap: () {
+                 if (!errorExists) {
+                   widget.isEditing ? updateBudget() : addBudget();
+                 }
+               },
                   ),
                 ),
-              ])
+                                   ],
+                                 ),
+                             ),
+          
+                          
+                
+          ],
+                   ),
+                 ),
+               )
+                  : Container()
             ]),
           ),
         ],
       ),
     );
+  }
+
+  void addItemsToList() {
+    setState(() {
+      budgets.add(
+        {
+          'item': {
+            'budget': nameController.text,
+            'amount': amountController.text
+          }
+        },
+      );
+    });
+    amountController.clear();
+    nameController.clear();
   }
 
   void addBudget() async {
@@ -172,8 +263,7 @@ class _AddBudgetCategoryState extends State<AddBudgetCategory> {
     });
 
     var res = await _budgetCategoryModule.addBudget(BudgetCategoryModel(
-      amountBudgeted: amountController.text,
-      name: nameController.text,
+      budgets: budgets,
       dateCreated: DateTime.now(),
       month: DateTime.parse(selectedDate),
       createdBy: 'Steady',
@@ -195,12 +285,10 @@ class _AddBudgetCategoryState extends State<AddBudgetCategory> {
     setState(() {
       isLoading = true;
     });
- 
 
     var res =
         await _budgetCategoryModule.updateBudget((widget.budget?.id ?? ''), {
-      'amountBudgeted': amountController.text,
-      'name': nameController.text,
+      'budgets': budgets,
       'month': selectedDate,
     });
 
@@ -210,8 +298,7 @@ class _AddBudgetCategoryState extends State<AddBudgetCategory> {
       ));
       // back
       Navigator.pop(context);
-    } 
-    else {
+    } else {
       Get.showSnackbar(GetSnackBar(
         title: 'Error',
         message: res.body.toString(),

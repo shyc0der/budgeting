@@ -3,24 +3,21 @@ import 'model.dart';
 class BudgetCategoryModel extends Model {
   BudgetCategoryModel(
       {this.id,
-      this.name,
-      this.amountBudgeted,
+      this.budgets,
       this.createdBy,
       this.month,
       DateTime? dateCreated})
       : super('budgetCategory','') {
     this.dateCreated = dateCreated ?? DateTime.now();
   }
-  String? id;
-  String? name;
-  String? amountBudgeted;
+  String? id;  
+  List<Map<String, dynamic>> ? budgets;
   late DateTime dateCreated;
   DateTime?  month;
   String? createdBy;
   BudgetCategoryModel.fromMap(Map map) : super('budgetCategory','') {
     id = map['id'];
-    name = map['name'];
-    amountBudgeted = map['amountBudgeted'];
+    budgets = List.from(map['budgets']).map((e) => Map<String,dynamic>.from(e)).toList();
     month = DateTime.tryParse(map['month'].toString());
     createdBy = map['createdBy'];
     dateCreated =
@@ -28,8 +25,7 @@ class BudgetCategoryModel extends Model {
   }
   Map<String, dynamic> asMap() {
     return {
-      'name': name,
-      'amountBudgeted': amountBudgeted,
+      'budgets': budgets,
       'createdBy': createdBy,
       'dateCreated': dateCreated.toIso8601String(),
       'month': month?.toIso8601String(),

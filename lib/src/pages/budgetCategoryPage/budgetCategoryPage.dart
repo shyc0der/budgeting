@@ -14,20 +14,26 @@ class BudgetCategoryPage extends StatefulWidget {
 
 class _BudgetCategoryPageState extends State<BudgetCategoryPage> {
   final BudgetCategoryModule _budgetCategoryModule = BudgetCategoryModule();
+  List<Map<String, dynamic>> budgets = [
+    {
+      'item': {'budget': 'shopping', 'amount': 100},
+    }
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
         body: SingleChildScrollView(
           //physics:const  NeverScrollableScrollPhysics(),
           child: Padding(
-            
             padding: const EdgeInsets.all(8.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-             const   Text("MONTLY BUDGETS",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17),),
+                const Text(
+                  "MONTLY BUDGETS",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                ),
                 StreamBuilder<List<BudgetCategoryModel>>(
                     stream: _budgetCategoryModule.fetchBudgets(),
                     builder: (context, snapshot) {
@@ -42,27 +48,37 @@ class _BudgetCategoryPageState extends State<BudgetCategoryPage> {
                               itemCount: (snapshot.data ?? []).length,
                               physics: const NeverScrollableScrollPhysics(),
                               itemBuilder: (BuildContext context, int index) {
+                                budgets = snapshot.data![index].budgets!;
+                                double _tt = 0;
+                                for (var budget in budgets) {
+                                  _tt = _tt +
+                                      (double.tryParse(budget['item']['amount']
+                                              .toString()) ??
+                                          0);
+                                }
                                 return GestureDetector(
                                   onTap: () {
-                                                      
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => AddBudgetCategory(
-                                            isEditing: true,
-                                            budget: snapshot.data?[index],
-                                          )));
-                            },
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                AddBudgetCategory(
+                                                  isEditing: true,
+                                                  budget: snapshot.data?[index],
+                                                )));
+                                  },
                                   child: ListTile(
-                                    title: Text(snapshot.data![index].name ?? ''),
+                                    
                                     //DateTime.parse(snapshot.data![index].month.toString()).month.toString()
                                     leading: Text(DateFormat("MMMM").format(
-                                        DateTime.parse(snapshot.data![index].month
+                                        DateTime.parse(snapshot
+                                            .data![index].month
                                             .toString()))),
-                                    subtitle: Text(
-                                        'Ksh. ${snapshot.data![index].amountBudgeted ?? ''}'),
-                                    trailing: Text(DateTime.parse(
-                                            snapshot.data![index].month.toString())
+                                    title: Text(
+                                        'Total Budget : Ksh. ${_tt}'),
+                                    trailing: Text(DateTime.parse(snapshot
+                                            .data![index].month
+                                            .toString())
                                         .year
                                         .toString()),
                                   ),

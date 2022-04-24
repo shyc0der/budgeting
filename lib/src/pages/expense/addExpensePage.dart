@@ -159,7 +159,8 @@ class _AddExpenseState extends State<AddExpense> {
               //list view builder
 
               expenseTypesAmount.isNotEmpty
-                  ? Expanded(
+                  ? 
+                  Expanded(
                       child: Padding(
                         padding: const EdgeInsets.all(3.0),
                         child: Column(
