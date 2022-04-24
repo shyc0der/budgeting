@@ -46,7 +46,7 @@ class _FirstPageState extends State<FirstPage> with SingleTickerProviderStateMix
               Tab(  
                              
                 icon: Image.asset('assets/images/budget.png',height: 43,),  
-                text: 'BUDGETS',           
+                text: 'BUDGET',           
                 
                 
               ),

@@ -4,6 +4,8 @@ import 'package:budget/src/pages/budgetCategoryPage/addBudgetCategory.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import 'budgetCategoryDetail.dart';
+
 class BudgetCategoryPage extends StatefulWidget {
   BudgetCategoryPage({this.budget, Key? key}) : super(key: key);
   BudgetCategoryModel? budget = BudgetCategoryModel();
@@ -62,9 +64,10 @@ class _BudgetCategoryPageState extends State<BudgetCategoryPage> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                AddBudgetCategory(
-                                                  isEditing: true,
-                                                  budget: snapshot.data?[index],
+                                            BudgetCategoryDetailPage
+                                                (                                                  
+                                                  budgetModel: snapshot.data?[index],
+                                                  total: _tt
                                                 )));
                                   },
                                   child: ListTile(
