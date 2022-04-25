@@ -37,7 +37,7 @@ class _FirstPageState extends State<FirstPage> with SingleTickerProviderStateMix
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-            backgroundColor: Colors.orangeAccent,
+            backgroundColor: const Color.fromRGBO(194, 72, 38, 1),
             title: const Text('Budget App'),
             bottom: TabBar
             (controller: _controller,

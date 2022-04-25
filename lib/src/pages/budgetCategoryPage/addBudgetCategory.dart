@@ -127,7 +127,7 @@ class _AddBudgetCategoryState extends State<AddBudgetCategory> {
               // YEAR and MONTH
               ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.orange,
+                    primary: const Color.fromRGBO(194, 72, 38, 1),
                   ),
                   onPressed: () async {
                     if (amountController.text.isEmpty) {

@@ -95,8 +95,8 @@ Widget inputField(String label, TextEditingController controller, bool error, {
             gradient: LinearGradient(
               stops: const [0.3, 0.8, 1],
               colors: [
-                Colors.orangeAccent,
-                Colors.orange,
+                Color.fromRGBO( 253, 86, 2,1),
+                Color.fromRGBO(226, 122, 83, 1),
                 Colors.orange[800]!,
               ]
             )

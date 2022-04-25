@@ -14,7 +14,7 @@ class BackgroundPage extends StatelessWidget {
             child: Container(
               height: 124,
               width: 144,
-              color: Colors.orange,
+              color: const Color.fromRGBO(194, 72, 38, 1),
             ),
           ),
         ),
@@ -25,7 +25,7 @@ class BackgroundPage extends StatelessWidget {
             child: Container(
               height: 109,
               width: 144,
-              color: Colors.orangeAccent,
+              color: const Color.fromRGBO(174, 72, 38, 1),
             ),
           ),
         ),
