@@ -70,7 +70,7 @@ class _BudgetCategoryDetailPageState extends State<BudgetCategoryDetailPage> {
               legend:
                   Legend(isVisible: true, textStyle: TextStyle(fontSize: 18)),
               title: ChartTitle(
-                  text: 'Total Amount : ${widget.total}',
+                  text: 'Total Amount : ${widget.total ?? 0}',
                   textStyle: const TextStyle(fontWeight: FontWeight.bold)),
               series: <CircularSeries>[
                 PieSeries<Map<String, dynamic>, String>(

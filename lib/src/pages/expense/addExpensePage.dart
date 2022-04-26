@@ -88,7 +88,7 @@ class _AddExpenseState extends State<AddExpense> {
               ),
               //Date
               DateTimePicker(
-                decoration: InputDecoration(fillColor: Colors.orangeAccent),
+                decoration:const  InputDecoration(fillColor: Color.fromRGBO(85, 54, 33, 1),),
                 initialValue: selectedDate.toString(),
                 firstDate: DateTime(2022),
                 lastDate: DateTime(2122),
@@ -130,7 +130,7 @@ class _AddExpenseState extends State<AddExpense> {
               ),
               ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.orange,
+                    primary: const Color.fromRGBO(85, 54, 33, 1),
                   ),
                   onPressed: () async {
                     if (expenseAmountController.text.isEmpty) {

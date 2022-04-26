@@ -84,7 +84,7 @@ class _AddMonthlyIncomeState extends State<AddMonthlyIncome> {
                 height: 20,
               ),
               //name
-              inputField('MONTHLY INCOME', salaryController, nameError,
+              inputField('SALARY/MAIN INCOME', salaryController, nameError,
                   isNumbers: true, onChanged: (val) {
                 if (val.isNotEmpty) {
                   setState(() {
@@ -120,7 +120,7 @@ class _AddMonthlyIncomeState extends State<AddMonthlyIncome> {
               // Name,Amount
               ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.orange,
+                    primary:const Color.fromRGBO(85, 54, 33, 1),
                   ),
                   onPressed: () async {
                     List<Map<String, dynamic>> res;
@@ -348,7 +348,7 @@ class _AddExtraIncomeState extends State<AddExtraIncome> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.orangeAccent,
+        backgroundColor: const Color.fromRGBO(85, 54, 33, 1),
         title: const Text('Add Extra Income'),
       ),
       body: Padding(

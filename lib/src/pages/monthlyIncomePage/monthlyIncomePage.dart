@@ -119,7 +119,7 @@ class _MonthlyIncomePageState extends State<MonthlyIncomePage> {
           ),
         ),
         floatingActionButton: FloatingActionButton(
-            backgroundColor: Colors.orange[600],
+            backgroundColor: const Color.fromRGBO(194, 72, 38, 1),
             child: const Icon(Icons.add),
             onPressed: () => Navigator.push(
                   context,
