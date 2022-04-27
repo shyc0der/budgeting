@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, must_be_immutable
+
 import 'package:budget/src/input.dart';
 import 'package:budget/src/models/budgetCategory.dart';
 import 'package:budget/src/modules/budgetCategoryModule.dart';

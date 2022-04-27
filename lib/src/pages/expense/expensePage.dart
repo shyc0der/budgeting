@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:budget/src/models/expenses.dart';
 import 'package:budget/src/modules/expenseModule.dart';
 import 'package:budget/src/pages/expense/addExpensePage.dart';
@@ -7,7 +9,7 @@ import 'package:intl/intl.dart';
 import 'expenseDetailPage.dart';
 
 class ExpensesPage extends StatefulWidget {
-   ExpensesPage({Key? key}) : super(key: key);
+   const ExpensesPage({Key? key}) : super(key: key);
 
   @override
   State<ExpensesPage> createState() => _ExpensesPageState();

@@ -1,9 +1,6 @@
 import 'package:budget/src/models/model.dart';
-import 'package:budget/src/pages/expense/addExpensePage.dart';
-import 'package:budget/src/pages/expense/expensePage.dart';
-import 'package:budget/src/pages/main.dart';
+import 'package:budget/src/pages/loginPage.dart';
 import 'package:flutter/material.dart';
-import 'src/pages/monthlyIncomePage/monthlyIncomeDetails.dart';
 
 
 
@@ -24,7 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const  FirstPage(),
+      home: const  LoginPage(),
     );
   }
 }

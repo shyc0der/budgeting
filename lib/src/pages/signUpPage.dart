@@ -86,7 +86,7 @@ class _SignUpPageState extends State<SignUpPage> {
     style: TextStyle(fontWeight: FontWeight.bold,fontSize: 12,color:Colors.black87),
     //DefaultTextStyle.of(context).style,
     children: <TextSpan> [
-      TextSpan(text: 'Login',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.orange,fontSize: 12))
+      TextSpan(text: 'Login',style: TextStyle(fontWeight: FontWeight.bold,color: Color.fromRGBO(194, 72, 38, 1),fontSize: 12))
     ]
     
     ),

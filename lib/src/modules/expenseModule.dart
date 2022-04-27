@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:budget/src/models/expenses.dart';
 import 'package:budget/src/modules/responseModel.dart';
 
@@ -34,7 +36,7 @@ class ExpenseModule {
 
   Future<ResponseModel> deleteExpenseExpenses(String _id, String id) async {    
      
-      var res = await _expenseModel.deleteCollection(_id, id);
+     await _expenseModel.deleteCollection(_id, id);
          
 
     return ResponseModel(ResponseType.success, "Expense Deleted");

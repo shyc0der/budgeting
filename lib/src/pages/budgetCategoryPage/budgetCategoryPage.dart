@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, must_be_immutable
+
 import 'package:budget/src/models/budgetCategory.dart';
 import 'package:budget/src/modules/budgetCategoryModule.dart';
 import 'package:budget/src/pages/budgetCategoryPage/addBudgetCategory.dart';
@@ -78,7 +80,7 @@ class _BudgetCategoryPageState extends State<BudgetCategoryPage> {
                                             .data![index].month
                                             .toString()))),
                                     title: Text(
-                                        'Total Budget : Ksh. ${_tt}'),
+                                        'Total Budget : Ksh. $_tt'),
                                     trailing: Text(DateTime.parse(snapshot
                                             .data![index].month
                                             .toString())

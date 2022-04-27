@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:budget/src/models/budgetCategory.dart';
 import 'package:budget/src/modules/responseModel.dart';
 

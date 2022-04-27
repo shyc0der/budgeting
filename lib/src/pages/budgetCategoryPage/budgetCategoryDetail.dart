@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, must_be_immutable
+
 import 'package:budget/src/models/budgetCategory.dart';
 import 'package:budget/src/pages/budgetCategoryPage/addBudgetCategory.dart';
 import 'package:flutter/material.dart';
@@ -68,7 +70,7 @@ class _BudgetCategoryDetailPageState extends State<BudgetCategoryDetailPage> {
             widget.budgetModel!.budgets!.isEmpty ? const Center(child :Text('No Data')) :
             SfCircularChart(
               legend:
-                  Legend(isVisible: true, textStyle: TextStyle(fontSize: 18)),
+                  Legend(isVisible: true, textStyle:const TextStyle(fontSize: 18)),
               title: ChartTitle(
                   text: 'Total Amount : ${widget.total ?? 0}',
                   textStyle: const TextStyle(fontWeight: FontWeight.bold)),

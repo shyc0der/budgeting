@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:budget/src/input.dart';
-import 'package:budget/src/pages/budgetCategoryPage/addBudgetCategory.dart';
+import 'package:budget/src/pages/main.dart';
 import 'package:budget/src/pages/signUpPage.dart';
 import 'package:budget/src/pages/background_page.dart';
 import 'package:flutter/material.dart';
@@ -62,7 +62,7 @@ class _LoginPageState extends State<LoginPage> {
                  fontSize: 20,
                  iconData: Icons.arrow_forward,
                  onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>  AddBudgetCategory()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=> const FirstPage()));
                 },
                ),
        )
@@ -86,7 +86,7 @@ class _LoginPageState extends State<LoginPage> {
     style: TextStyle(fontWeight: FontWeight.bold,fontSize: 12,color:Colors.black87),
     //DefaultTextStyle.of(context).style,
     children: <TextSpan> [
-      TextSpan(text: 'Sign up',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.orange,fontSize: 12))
+      TextSpan(text: 'Sign up',style: TextStyle(fontWeight: FontWeight.bold,color: Color.fromRGBO(194, 72, 38, 1),fontSize: 12))
     ]
     
     ),

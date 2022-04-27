@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable, file_names
+
 import 'package:budget/src/input.dart';
 import 'package:budget/src/models/expenses.dart';
 import 'package:budget/src/modules/expenseModule.dart';
@@ -5,7 +7,6 @@ import 'package:budget/src/modules/responseModel.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/get_core.dart';
 
 import '../background_page.dart';
 
@@ -20,7 +21,7 @@ class AddExpense extends StatefulWidget {
 }
 
 class _AddExpenseState extends State<AddExpense> {
-  ExpenseModule _expenseModule = ExpenseModule();
+ final ExpenseModule _expenseModule = ExpenseModule();
   late String selectedDate = DateTime.now().toString();
   TextEditingController expenseTypeController = TextEditingController();
   TextEditingController expenseAmountController = TextEditingController();
@@ -37,7 +38,6 @@ class _AddExpenseState extends State<AddExpense> {
   @override
   void initState() {
     expenseTypesAmount.clear();
-    // TODO: implement initState
     if (widget.isEditing) {
       selectedDate = (widget.expenseModel?.month ?? DateTime.now()).toString();
       expenseTypesAmount = widget.expenseModel!.expenses!;
@@ -125,7 +125,7 @@ class _AddExpenseState extends State<AddExpense> {
                 },
               ),
 
-              SizedBox(
+            const  SizedBox(
                 height: 10,
               ),
               ElevatedButton.icon(

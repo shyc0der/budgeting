@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:budget/src/models/monthlyIncome.dart';
 import 'package:budget/src/modules/responseModel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

@@ -1,12 +1,9 @@
-import 'dart:ui';
-
 import 'package:budget/src/pages/budgetCategoryPage/budgetCategoryPage.dart';
 import 'package:budget/src/pages/expense/expensePage.dart';
 import 'package:budget/src/pages/monthlyIncomePage/monthlyIncomePage.dart';
-import 'package:budget/src/shared.dart';
 import 'package:flutter/material.dart';
 
-import 'background_page.dart';
+
 
 class FirstPage extends StatefulWidget {
   const FirstPage({Key? key}) : super(key: key);
@@ -65,8 +62,8 @@ class _FirstPageState extends State<FirstPage> with SingleTickerProviderStateMix
             //BUDGET
             
             BudgetCategoryPage(),
-            ExpensesPage(),
-            MonthlyIncomePage()
+           const ExpensesPage(),
+          const  MonthlyIncomePage()
             
           ],
         ),

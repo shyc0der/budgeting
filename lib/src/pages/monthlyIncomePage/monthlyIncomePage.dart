@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class MonthlyIncomePage extends StatefulWidget {
-  MonthlyIncomePage({Key? key}) : super(key: key);
+ const MonthlyIncomePage({Key? key}) : super(key: key);
 
   @override
   _MonthlyIncomePageState createState() => _MonthlyIncomePageState();

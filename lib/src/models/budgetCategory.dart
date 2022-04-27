@@ -1,3 +1,5 @@
+// ignore_for_file: annotate_overrides, overridden_fields, file_names
+
 import 'model.dart';
 
 class BudgetCategoryModel extends Model {

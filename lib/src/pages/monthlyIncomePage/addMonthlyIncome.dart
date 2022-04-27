@@ -317,7 +317,7 @@ class _AddExtraIncomeState extends State<AddExtraIncome> {
       asmap.addAll(widget.currentExtraIncomes!);
     }
 
-    var _res = asmap.fold<double>(
+     asmap.fold<double>(
         0,
         (previousValue, _extraInc) =>
             previousValue +

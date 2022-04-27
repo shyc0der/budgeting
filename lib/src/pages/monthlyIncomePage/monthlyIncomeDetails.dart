@@ -1,6 +1,6 @@
-import 'package:budget/src/models/expenses.dart';
+// ignore_for_file: file_names, must_be_immutable
+
 import 'package:budget/src/models/monthlyIncome.dart';
-import 'package:budget/src/pages/expense/addExpensePage.dart';
 import 'package:budget/src/pages/monthlyIncomePage/addMonthlyIncome.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -77,7 +77,7 @@ class _MonthlyIncomeDetailsState extends State<MonthlyIncomeDetails> {
                 ? const Center(child: Text('No Data'))
                 : SfCircularChart(
                     legend: Legend(
-                        isVisible: true, textStyle: TextStyle(fontSize: 18)),
+                        isVisible: true, textStyle: const TextStyle(fontSize: 18)),
                     title: ChartTitle(
                         text:
                             'Total Amount : ${((widget.total ?? 0) + (double.tryParse(widget.incomeModel!.salary!) ?? 0))}',
