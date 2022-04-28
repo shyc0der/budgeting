@@ -1,5 +1,6 @@
 import 'package:budget/src/models/model.dart';
 import 'package:budget/src/pages/loginPage.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 
@@ -7,6 +8,18 @@ import 'package:flutter/material.dart';
 void main() async {
    WidgetsFlutterBinding.ensureInitialized();
   await Model.initiateFireStore();
+ Firebase.initializeApp(
+         // name: 'SecondaryApp',
+          options: const FirebaseOptions(
+            
+            apiKey: 'AIzaSyDwn4T6UwLMqLLD5w7jARWVJabiS7DyAmY',
+            appId: '1:834602052606:web:0852fa8eedae2746682eaf',
+            messagingSenderId: '834602052606',
+            projectId: 'budgeting-62e58',
+            databaseURL: "https://budgeting-62e58.firebaseio.com",
+            storageBucket: "budgeting-62e58.appspot.com",
+            measurementId: "G-6CQQ394FHP",
+          ));
   runApp(const MyApp());
 }
 

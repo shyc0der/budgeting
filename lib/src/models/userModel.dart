@@ -7,8 +7,8 @@ class UserModel extends Model {
     this.id,
     this.fullName,
     this.email,
+    this.password,
     this.phoneNumber,
-    this.userName,
     DateTime? dateCreated,
   }) : super("users", "") {
     this.dateCreated = dateCreated ?? DateTime.now();
@@ -16,8 +16,8 @@ class UserModel extends Model {
 
   String? id;
   String? fullName;
-  String? userName;
   String? email;
+  String? password;
   String? phoneNumber;
   late DateTime dateCreated;
   UserModel.fromMap(Map map) : super("users", "") {
@@ -25,16 +25,14 @@ class UserModel extends Model {
     fullName = map['fullName'];
     email = map['email'];
     phoneNumber = map['phoneNumber'];
-    userName = map['userName'];
     dateCreated = DateTime.tryParse(map['dateCreated'].toString()) ?? DateTime.now();
   }
   Map<String, dynamic> asMap() {
     return {
-      'id': id,
       'fullName': fullName,
       'email': email,
+      'password': password,
       'phoneNumber': phoneNumber,
-      'userName': userName,
       'dateCreated': dateCreated.toIso8601String()
     };
   }
