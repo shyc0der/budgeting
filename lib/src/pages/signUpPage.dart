@@ -28,9 +28,10 @@ class _SignUpPageState extends State<SignUpPage> {
   bool emailInvalid = false;
   bool pswdError = false;
   bool phoneNoError = false;
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
-      return Scaffold(
+    return Scaffold(
       body: Stack(
         children: [
           const BackgroundPage(),
@@ -83,18 +84,45 @@ class _SignUpPageState extends State<SignUpPage> {
                     Align(
                       alignment: Alignment.bottomRight,
                       child: CustomElavtedButton(
-                        errorExists: false,
-                        label: 'SIGN UP',
-                        fontSize: 18,
-                        iconData: Icons.arrow_forward,
-                        onTap: () async {
-                          await _userModule.addUser(UserModel(
-                              email: emailController.text,
-                              phoneNumber: phoneNoController.text,
-                              password: pswdController.text,
-                              fullName: fullNameController.text));
-                        },
-                      ),
+                          errorExists: false,
+                          label: 'SIGN UP',
+                          fontSize: 18,
+                          iconData: Icons.arrow_forward,
+                          onTap: isLoading
+                              ? null
+                              : () async {
+                                  bool errorExist = false;
+
+                                  if (fullNameController.text.isEmpty) {
+                                    errorExist = true;
+                                    setState(() {
+                                      fullNameError = true;
+                                    });
+                                  }
+                                  if (phoneNoController.text.isEmpty) {
+                                    errorExist = true;
+                                    setState(() {
+                                      phoneNoError = true;
+                                    });
+                                  }
+                                  if (emailController.text.isEmpty) {
+                                    errorExist = true;
+                                    setState(() {
+                                      emailError = true;
+                                    });
+                                  }
+                                  if (!GetUtils.isEmail(emailController.text)) {
+                                    errorExist = true;
+                                    setState(() {
+                                      emailInvalid = true;
+                                    });
+                                  }
+
+                                  // if no error exist save user
+                                  if (!errorExist) {
+                                    addUser();
+                                  }
+                                }),
                     )
                   ],
                 ),

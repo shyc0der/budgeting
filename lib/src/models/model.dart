@@ -16,8 +16,8 @@ class Model {
           options: const FirebaseOptions(
             
             apiKey: 'AIzaSyC0fEnR82fUOJd80gAttQRMzU6kz31ql4s',
-            appId: "1:763713344331:web:86fdff2f5dd74eb1378ece",            
-            authDomain: "budgeting-62e58.firebaseapp.com",
+            authDomain: 'budgeting-62e58.firebaseapp.com',
+            appId: '1:763713344331:web:86fdff2f5dd74eb1378ece',
             messagingSenderId: '763713344331',
             projectId: 'budgeting-62e58',
             databaseURL: "https://budgeting-62e58.firebaseio.com",

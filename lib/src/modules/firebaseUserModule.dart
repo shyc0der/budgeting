@@ -13,23 +13,14 @@ class FirebaseUser {
 
   static Future<ResponseModel> createUser(String email, String password) async {
     try {
-      FirebaseApp firebaseApp = await 
-      Firebase.initializeApp(
+      FirebaseApp firebaseApp = await Firebase.initializeApp(
           name: 'Secondary', options: Firebase.app().options);
-      
-    
-
-      
       FirebaseAuth _auth = FirebaseAuth.instanceFor(app: firebaseApp);
-       print('63333333333333333333333333333333');
-       print(_auth);
       UserCredential userCredential = await _auth
           .createUserWithEmailAndPassword(email: email, password: password);
-      print('63333333333333333333333333333333');
-      print(userCredential);
 
       await firebaseApp.delete();
-
+    
       return ResponseModel(ResponseType.success, userCredential.user?.uid);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {

@@ -10,15 +10,17 @@ void main() async {
   await Model.initiateFireStore();
  Firebase.initializeApp(
          // name: 'SecondaryApp',
+         
           options: const FirebaseOptions(
             
-            apiKey: 'AIzaSyDwn4T6UwLMqLLD5w7jARWVJabiS7DyAmY',
-            appId: '1:834602052606:web:0852fa8eedae2746682eaf',
-            messagingSenderId: '834602052606',
+            apiKey: 'AIzaSyC0fEnR82fUOJd80gAttQRMzU6kz31ql4s',
+            authDomain: 'budgeting-62e58.firebaseapp.com',
+            appId: '1:763713344331:web:86fdff2f5dd74eb1378ece',
+            messagingSenderId: '763713344331',
             projectId: 'budgeting-62e58',
             databaseURL: "https://budgeting-62e58.firebaseio.com",
             storageBucket: "budgeting-62e58.appspot.com",
-            measurementId: "G-6CQQ394FHP",
+            measurementId: "G-R2GLZT2QKX",
           ));
   runApp(const MyApp());
 }
