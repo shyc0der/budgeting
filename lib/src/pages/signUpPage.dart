@@ -83,9 +83,9 @@ class _SignUpPageState extends State<SignUpPage> {
 
                     Align(
                       alignment: Alignment.bottomRight,
-                      child: CustomElavtedButton(
+                      child: isLoading ? const CircularProgressIndicator() : CustomElavtedButton(
                           errorExists: false,
-                          label: 'SIGN UP',
+                          label:  'SIGN UP',
                           fontSize: 18,
                           iconData: Icons.arrow_forward,
                           onTap: isLoading
@@ -163,11 +163,18 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   void addUser() async {
+     setState(() {
+      isLoading = true;
+    });
     var _res = await _userModule.addUser(UserModel(
         email: emailController.text,
         phoneNumber: phoneNoController.text,
         password: pswdController.text,
         fullName: fullNameController.text));
+setState(() {
+      isLoading = false;
+    });
+        
 
     if (_res.status == ResponseType.success) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -175,14 +182,16 @@ class _SignUpPageState extends State<SignUpPage> {
       ));
       // back
       Navigator.pop(context);
-    } else {
-      if (_res.body == 'weak-password') {
+    } 
+    else {
+       if (_res.body == 'weak-password') {
         Get.showSnackbar(const GetSnackBar(
           title: 'Weak password',
           message: 'Weak password',
           backgroundColor: Colors.redAccent,
         ));
-      } else if (_res.body == 'email-already-in-use') {
+      }
+       else if (_res.body == 'email-already-in-use') {
         Get.showSnackbar(GetSnackBar(
           title: 'Email already registered',
           message: 'Email already registered',
@@ -192,7 +201,8 @@ class _SignUpPageState extends State<SignUpPage> {
         setState(() {
           emailInvalid = true;
         });
-      } else {
+      } 
+      else {
         Get.showSnackbar(GetSnackBar(
           title: 'Error',
           message: _res.body.toString(),
