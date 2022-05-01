@@ -76,6 +76,9 @@ class Model {
   Future<DocumentSnapshot<Map<String, dynamic>>> fetchById(String _id) async {
     return (await firestore.collection(collectionName).doc(_id).get());
   }
+   Future<DocumentSnapshot<Map<String, dynamic>>> fetchOneById(String id)async{
+    return (await firestore.collection(collectionName).doc(id).get());
+  }
 
   // fetch data where
   //return a list of data where

@@ -3,9 +3,27 @@
 import 'package:budget/src/models/userModel.dart';
 import 'package:budget/src/modules/firebaseUserModule.dart';
 import 'package:budget/src/modules/responseModel.dart';
+import 'package:get/state_manager.dart';
 
-class UserModule {
+class UserModule extends GetxController{
   final UserModel _userModel = UserModel();
+
+   Rx<UserModel> currentUser = Rx(UserModel());
+ RxList<UserModel> users = <UserModel>[].obs;
+ RxBool isSuperUser = false.obs;
+
+  Future<UserModel> getUserById(String userId)async{
+   final userMap =await _userModel.fetchOneById(userId);
+   return UserModel.fromMap({'id': userMap.id, ...(userMap.data() ?? {})});
+ }
+
+ Future<void> setCurrentUser(String userId)async{
+   getUserById(userId).then((value){
+     currentUser.value = value;
+   });
+
+ }
+
 
   Future<ResponseModel> addUser(UserModel user) async {
     final _res = await FirebaseUser.createUser(
@@ -19,4 +37,5 @@ class UserModule {
       return _res;
     }
   }
+
 }

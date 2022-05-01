@@ -35,4 +35,26 @@ class FirebaseUser {
       return ResponseModel(ResponseType.error, e);
     }
   }
+
+  static Future<ResponseModel> login(String email, String password) async {
+    try {
+      UserCredential userCredential = await auth.signInWithEmailAndPassword(
+          email: email, password: password);
+      return ResponseModel(
+          ResponseType.success, userCredential.user?.uid.toString());
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        return ResponseModel(ResponseType.warning, 'user-not-found');
+      } else if (e.code == 'wrong-password') {
+        return ResponseModel(ResponseType.warning, 'wrong-password');
+      }
+      return ResponseModel(ResponseType.error, e);
+    } catch (e) {
+      return ResponseModel(ResponseType.error, e);
+    }
+  }
+
+  static Future<void> logout() async {
+    await auth.signOut();
+  }
 }
