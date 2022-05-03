@@ -12,7 +12,7 @@ class Model {
   static Future<void> initiateFireStore() async {
     try {
       await Firebase.initializeApp(
-          name: 'SecondaryApp',
+         // name: 'SecondaryApp',
           options: const FirebaseOptions(
             
             apiKey: 'AIzaSyC0fEnR82fUOJd80gAttQRMzU6kz31ql4s',

@@ -8,20 +8,7 @@ import 'package:flutter/material.dart';
 void main() async {
    WidgetsFlutterBinding.ensureInitialized();
   await Model.initiateFireStore();
- Firebase.initializeApp(
-         // name: 'SecondaryApp',
-         
-          options: const FirebaseOptions(
-            
-            apiKey: 'AIzaSyC0fEnR82fUOJd80gAttQRMzU6kz31ql4s',
-            authDomain: 'budgeting-62e58.firebaseapp.com',
-            appId: '1:763713344331:web:86fdff2f5dd74eb1378ece',
-            messagingSenderId: '763713344331',
-            projectId: 'budgeting-62e58',
-            databaseURL: "https://budgeting-62e58.firebaseio.com",
-            storageBucket: "budgeting-62e58.appspot.com",
-            measurementId: "G-R2GLZT2QKX",
-          ));
+ 
   runApp(const MyApp());
 }
 
@@ -31,8 +18,12 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-         home: LoginPage(),
+    return MaterialApp(
+      title: 'BudgetApp',
+      theme: ThemeData(
+        primarySwatch: Colors.deepOrange,
+      ),
+      home: const  LoginPage(),
     );
   }
 }

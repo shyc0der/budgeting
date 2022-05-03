@@ -6,7 +6,6 @@ import 'package:budget/src/modules/responseModel.dart';
 import 'package:budget/src/modules/userModule.dart';
 import 'package:budget/src/pages/background_page.dart';
 import 'package:budget/src/pages/loginPage.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

@@ -15,12 +15,12 @@ class FirebaseUser {
     try {
       FirebaseApp firebaseApp = await Firebase.initializeApp(
           name: 'Secondary', options: Firebase.app().options);
-      print(firebaseApp);
+      
       FirebaseAuth _auth = FirebaseAuth.instanceFor(app: firebaseApp);
-      print(_auth);
+     
       UserCredential userCredential = await _auth
           .createUserWithEmailAndPassword(email: email, password: password);
-      print(auth);
+      
       await firebaseApp.delete();
 
       return ResponseModel(ResponseType.success, userCredential.user?.uid);
