@@ -130,7 +130,10 @@ class _LoginPageState extends State<LoginPage> {
                           await Future.delayed(const Duration(seconds: 1));
                           if (_res.status == ResponseType.success) {
                             // get user
-                            userModule.setCurrentUser(_res.body.toString());
+                            var res2 =
+                                userModule.setCurrentUser(_res.body.toString());
+                            print(res2);
+                            print(res2);
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
