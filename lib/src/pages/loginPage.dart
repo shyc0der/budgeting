@@ -132,8 +132,7 @@ class _LoginPageState extends State<LoginPage> {
                             // get user
                             var res2 =
                                 userModule.setCurrentUser(_res.body.toString());
-                            print(res2);
-                            print(res2);
+                            
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
