@@ -9,7 +9,7 @@ import 'package:intl/intl.dart';
 import 'expenseDetailPage.dart';
 
 class ExpensesPage extends StatefulWidget {
-   const ExpensesPage({Key? key}) : super(key: key);
+    const ExpensesPage({Key? key}) : super(key: key);
 
   @override
   State<ExpensesPage> createState() => _ExpensesPageState();
