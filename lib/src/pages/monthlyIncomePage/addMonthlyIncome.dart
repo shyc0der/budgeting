@@ -2,8 +2,10 @@
 
 import 'package:budget/src/input.dart';
 import 'package:budget/src/models/monthlyIncome.dart';
+import 'package:budget/src/modules/budgetCategoryModule.dart';
 import 'package:budget/src/modules/monthlyIncome.dart';
 import 'package:budget/src/modules/responseModel.dart';
+import 'package:budget/src/modules/userModule.dart';
 import 'package:budget/src/pages/background_page.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +24,9 @@ class AddMonthlyIncome extends StatefulWidget {
 class _AddMonthlyIncomeState extends State<AddMonthlyIncome> {
   TextEditingController salaryController = TextEditingController();
   final MonthlyIncomeModule _monthlyIncomeModule = MonthlyIncomeModule();
+    UserModule userModel = Get.put(UserModule());
+    
+  final BudgetCategoryModule _budgetCategoryModule = BudgetCategoryModule();
 
   bool nameError = false;
   bool amountError = false;
@@ -42,6 +47,9 @@ class _AddMonthlyIncomeState extends State<AddMonthlyIncome> {
       selectedDate = (widget.incomeModel?.month ?? DateTime.now()).toString();
       _res = widget.incomeModel!.extraIncome!;
     }
+
+    
+      _budgetCategoryModule.init(userModel.currentUser.value);
     super.initState();
   }
 
@@ -245,7 +253,7 @@ class _AddMonthlyIncomeState extends State<AddMonthlyIncome> {
     var res = await _monthlyIncomeModule.addIncome(MonthlyIncomeModel(
         salary: salaryController.text,
         extraIncome: _res,
-        createdBy: 'Steady',
+        createdBy: userModel.currentUser.value.id,
         month: DateTime.parse(selectedDate),
         dateCreated: DateTime.now()));
     if (res.status == ResponseType.success) {

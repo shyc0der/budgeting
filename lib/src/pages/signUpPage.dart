@@ -170,9 +170,9 @@ class _SignUpPageState extends State<SignUpPage> {
         phoneNumber: phoneNoController.text,
         password: pswdController.text,
         fullName: fullNameController.text));
-setState(() {
-      isLoading = false;
-    });
+        setState(() {
+          isLoading = false;
+         });
         
 
     if (_res.status == ResponseType.success) {

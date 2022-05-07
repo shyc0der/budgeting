@@ -1,3 +1,4 @@
+import 'package:budget/src/modules/budgetCategoryModule.dart';
 import 'package:budget/src/modules/firebaseUserModule.dart';
 import 'package:budget/src/modules/userModule.dart';
 import 'package:budget/src/pages/budgetCategoryPage/budgetCategoryPage.dart';
@@ -5,6 +6,7 @@ import 'package:budget/src/pages/expense/expensePage.dart';
 import 'package:budget/src/pages/loginPage.dart';
 import 'package:budget/src/pages/monthlyIncomePage/monthlyIncomePage.dart';
 import 'package:flutter/material.dart';
+import 'package:get/instance_manager.dart';
 
 class FirstPage extends StatefulWidget {
   const FirstPage({Key? key}) : super(key: key);
@@ -17,10 +19,13 @@ class _FirstPageState extends State<FirstPage>
     with SingleTickerProviderStateMixin {
   late TabController _controller;
   int selectedIndex = 0;
+  final BudgetCategoryModule _budgetCategoryModule = BudgetCategoryModule();
+  UserModule userModel = Get.put(UserModule());
 
   @override
   void initState() {
     _controller = TabController(initialIndex: 0, length: 3, vsync: this);
+    _budgetCategoryModule.init(userModel.currentUser.value);
     super.initState();
   }
 
@@ -29,8 +34,6 @@ class _FirstPageState extends State<FirstPage>
     _controller.dispose();
     super.dispose();
   }
-
-  UserModule _userModule = UserModule();
 
   @override
   Widget build(BuildContext context) {
@@ -41,14 +44,16 @@ class _FirstPageState extends State<FirstPage>
             backgroundColor: const Color.fromRGBO(194, 72, 38, 1),
             title: const Text('Budget App'),
             actions: [
-              IconButton(onPressed: () async  {
-                FirebaseUser.logout();
-                await Future.delayed(const Duration(seconds: 1));
-                Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const LoginPage()));
-              }, icon: const Icon(Icons.logout))
+              IconButton(
+                  onPressed: () async {
+                    FirebaseUser.logout();
+                    await Future.delayed(const Duration(seconds: 1));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const LoginPage()));
+                  },
+                  icon: const Icon(Icons.logout))
             ],
             bottom: TabBar(controller: _controller,
                 //padding: EdgeInsets.all(19),

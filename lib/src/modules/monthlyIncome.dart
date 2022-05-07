@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:budget/src/models/monthlyIncome.dart';
+import 'package:budget/src/models/userModel.dart';
 import 'package:budget/src/modules/responseModel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -15,8 +16,8 @@ class MonthlyIncomeModule {
 
   //fetch Income
   //Stram
-  Stream<List<MonthlyIncomeModel>> fetchIncome() {
-    return _monthlyIncomeModel.snapshotsOnline().map((snapshots) {
+  Stream<List<MonthlyIncomeModel>> fetchIncome(UserModel user) {
+    return _monthlyIncomeModel.snapshotsWhere('createdBy',isEqualTo: user.id).map((snapshots) {
       return snapshots.docs.map((doc) {
         
         return MonthlyIncomeModel.fromMap({'id': doc.id, ...doc.data() as Map});

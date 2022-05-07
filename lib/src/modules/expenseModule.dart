@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:budget/src/models/expenses.dart';
+import 'package:budget/src/models/userModel.dart';
 import 'package:budget/src/modules/responseModel.dart';
 
 class ExpenseModule {
@@ -20,8 +21,8 @@ class ExpenseModule {
   }
 
 //fetch Expenses
-  Stream<List<ExpenseModel>> fetchExpenses() {
-    return _expenseModel.snapshotsOnline().map((event) {
+  Stream<List<ExpenseModel>> fetchExpenses(UserModel user) {
+    return _expenseModel.snapshotsWhere('createdBy',isEqualTo: user.id).map((event) {
       return event.docs.map((e) {
         return ExpenseModel.fromMap({'id': e.id, ...e.data() as Map});
       }).toList();

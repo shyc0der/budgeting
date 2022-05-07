@@ -30,7 +30,6 @@ class _BudgetCategoryPageState extends State<BudgetCategoryPage> {
   @override
   void initState() {
     _budgetCategoryModule.init(userModel.currentUser.value);
-    print(userModel.currentUser.value.asMap());
     super.initState();
   }
 

@@ -24,7 +24,9 @@ class BudgetCategoryModule {
 
   //fetch Budget
   Stream<List<BudgetCategoryModel>> fetchBudgets(UserModel user) {
-    return _budgetCategoryModel.snapshotsOnline().map((event) {
+    return _budgetCategoryModel.snapshotsWhere('createdBy', isEqualTo: user.id,
+    
+    ).map((event) {
       return event.docs.map((e) {
         return BudgetCategoryModel.fromMap({'id': e.id, ...e.data() as Map});
       }).toList();

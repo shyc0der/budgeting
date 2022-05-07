@@ -4,6 +4,7 @@ import 'package:budget/src/input.dart';
 import 'package:budget/src/models/budgetCategory.dart';
 import 'package:budget/src/modules/budgetCategoryModule.dart';
 import 'package:budget/src/modules/responseModel.dart';
+import 'package:budget/src/modules/userModule.dart';
 import 'package:budget/src/pages/background_page.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,7 @@ class _AddBudgetCategoryState extends State<AddBudgetCategory> {
   bool amountError = false;
   bool isLoading = false;
   bool errorExists = false;
+  UserModule userModel = Get.put(UserModule());
   List<Map<String, dynamic>>  budgets = [
     {
       'item': {'budget': 'shopping', 'amount': 100},
@@ -39,6 +41,7 @@ class _AddBudgetCategoryState extends State<AddBudgetCategory> {
     if (widget.isEditing) {
       budgets = widget.budget!.budgets!;
       selectedDate = widget.budget!.month!.toString();
+      _budgetCategoryModule.init(userModel.currentUser.value);
     }
 
     super.initState();
@@ -268,7 +271,7 @@ class _AddBudgetCategoryState extends State<AddBudgetCategory> {
       budgets: budgets,
       dateCreated: DateTime.now(),
       month: DateTime.parse(selectedDate),
-      createdBy: 'Steady',
+      createdBy: userModel.currentUser.value.id,
     ));
     if (res.status == ResponseType.success) {
       ScaffoldMessenger.of(context).showSnackBar(

@@ -2,8 +2,10 @@
 
 import 'package:budget/src/input.dart';
 import 'package:budget/src/models/expenses.dart';
+import 'package:budget/src/modules/budgetCategoryModule.dart';
 import 'package:budget/src/modules/expenseModule.dart';
 import 'package:budget/src/modules/responseModel.dart';
+import 'package:budget/src/modules/userModule.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -30,6 +32,9 @@ class _AddExpenseState extends State<AddExpense> {
   bool errorExists = false;
   bool isLoading = false;
 
+UserModule userModel = Get.put(UserModule());
+    
+  final BudgetCategoryModule _budgetCategoryModule = BudgetCategoryModule();
   List<Map<String, dynamic>> expenseTypesAmount = [
     {
       'item': {'expense': 'shopping', 'amount': 100},
@@ -42,6 +47,7 @@ class _AddExpenseState extends State<AddExpense> {
       selectedDate = (widget.expenseModel?.month ?? DateTime.now()).toString();
       expenseTypesAmount = widget.expenseModel!.expenses!;
     }
+    _budgetCategoryModule.init(userModel.currentUser.value);
 
     super.initState();
   }
@@ -236,7 +242,7 @@ class _AddExpenseState extends State<AddExpense> {
     var res = await _expenseModule.addExpenses(ExpenseModel(
         expenses: expenseTypesAmount,
         month: DateTime.tryParse(selectedDate),
-        createdBy: 'Steady',
+        createdBy: userModel.currentUser.value.id,
         dateCreated: DateTime.now()));
 
     if (res.status == ResponseType.success) {
