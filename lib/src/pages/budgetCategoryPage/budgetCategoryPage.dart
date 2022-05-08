@@ -12,8 +12,9 @@ import 'package:intl/intl.dart';
 import 'budgetCategoryDetail.dart';
 
 class BudgetCategoryPage extends StatefulWidget {
-  BudgetCategoryPage({this.budget, Key? key}) : super(key: key);
+  BudgetCategoryPage({this.budget,this.user, Key? key}) : super(key: key);
   BudgetCategoryModel? budget = BudgetCategoryModel();
+  UserModule user= UserModule;
 
   @override
   State<BudgetCategoryPage> createState() => _BudgetCategoryPageState();

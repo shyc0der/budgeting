@@ -85,7 +85,7 @@ class _FirstPageState extends State<FirstPage>
           children: <Widget>[
             //BUDGET
 
-            BudgetCategoryPage(),
+            BudgetCategoryPage(user: userModel.currentUser.value),
             const ExpensesPage(),
             const MonthlyIncomePage()
           ],
