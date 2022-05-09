@@ -134,7 +134,7 @@ class _LoginPageState extends State<LoginPage> {
                            await  Get.offAndToNamed('/');                         
 
 
-                          Navigator.push(
+                        await  Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => const FirstPage()));

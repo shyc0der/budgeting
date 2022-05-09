@@ -1,4 +1,6 @@
+import 'package:budget/src/models/budgetCategory.dart';
 import 'package:budget/src/models/model.dart';
+import 'package:budget/src/modules/budgetCategoryModule.dart';
 import 'package:budget/src/modules/firebaseUserModule.dart';
 import 'package:budget/src/modules/userModule.dart';
 import 'package:budget/src/pages/budgetCategoryPage/budgetCategoryPage.dart';
@@ -17,6 +19,7 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 void main() async {
    WidgetsFlutterBinding.ensureInitialized();
   await Model.initiateFireStore();
+  Get.put(BudgetCategoryModule());
  
   runApp( MyApp());
 }

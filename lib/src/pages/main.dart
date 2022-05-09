@@ -1,3 +1,4 @@
+import 'package:budget/src/models/userModel.dart';
 import 'package:budget/src/modules/budgetCategoryModule.dart';
 import 'package:budget/src/modules/firebaseUserModule.dart';
 import 'package:budget/src/modules/userModule.dart';
@@ -19,14 +20,21 @@ class _FirstPageState extends State<FirstPage>
     with SingleTickerProviderStateMixin {
   late TabController _controller;
   int selectedIndex = 0;
-  final BudgetCategoryModule _budgetCategoryModule = BudgetCategoryModule();
-  UserModule userModel = Get.put(UserModule());
+  final UserModule userModule = Get.find<UserModule>();
+ final BudgetCategoryModule _budgetCategoryModule = Get.put(BudgetCategoryModule());
 
   @override
   void initState() {
+    super.initState();    
     _controller = TabController(initialIndex: 0, length: 3, vsync: this);
-    _budgetCategoryModule.init(userModel.currentUser.value);
-    super.initState();
+    setState(() {
+      _budgetCategoryModule.init(userModule.currentUser.value);
+    });
+    
+
+    print(userModule.currentUser.value.asMap());
+
+    
   }
 
   @override
@@ -85,7 +93,7 @@ class _FirstPageState extends State<FirstPage>
           children: <Widget>[
             //BUDGET
 
-            BudgetCategoryPage(user: userModel.currentUser.value),
+            BudgetCategoryPage(),
             const ExpensesPage(),
             const MonthlyIncomePage()
           ],
