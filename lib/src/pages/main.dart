@@ -38,6 +38,13 @@ class _FirstPageState extends State<FirstPage>
     print(userModule.currentUser.value.asMap());
     print(userModule.currentUser.value.asMap());
     print(userModule.currentUser.value.asMap());
+    print(userModule.currentUser.value.asMap());   
+     print(userModule.currentUser.value.asMap());
+    print(userModule.currentUser.value.asMap());
+    print(userModule.currentUser.value.asMap());
+    print(userModule.currentUser.value.asMap());
+    print(userModule.currentUser.value.asMap());
+    print(userModule.currentUser.value.asMap());
     print(userModule.currentUser.value.asMap());
 
     
