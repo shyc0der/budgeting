@@ -6,11 +6,13 @@ import 'package:budget/src/pages/budgetCategoryPage/budgetCategoryPage.dart';
 import 'package:budget/src/pages/expense/expensePage.dart';
 import 'package:budget/src/pages/loginPage.dart';
 import 'package:budget/src/pages/monthlyIncomePage/monthlyIncomePage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
 
 class FirstPage extends StatefulWidget {
-  const FirstPage({Key? key}) : super(key: key);
+  const FirstPage({this.userid, Key? key}) : super(key: key);
+  final String? userid;
 
   @override
   State<FirstPage> createState() => _FirstPageState();
@@ -21,47 +23,17 @@ class _FirstPageState extends State<FirstPage>
   late TabController _controller;
   int selectedIndex = 0;
   final UserModule userModule = Get.find<UserModule>();
- final BudgetCategoryModule _budgetCategoryModule = Get.put(BudgetCategoryModule());
+  final BudgetCategoryModule _budgetCategoryModule =
+      Get.put(BudgetCategoryModule());
 
   @override
   void initState() {
-    super.initState();    
+    super.initState();
     _controller = TabController(initialIndex: 0, length: 3, vsync: this);
     setState(() {
       _budgetCategoryModule.init(userModule.currentUser.value);
     });
-    
-
-    print(userModule.currentUser.value.asMap());
-    print(userModule.currentUser.value.asMap());
-    print(userModule.currentUser.value.asMap());
-    print(userModule.currentUser.value.asMap());
-    print(userModule.currentUser.value.asMap());
-    print(userModule.currentUser.value.asMap());
-    print(userModule.currentUser.value.asMap());   
-     print(userModule.currentUser.value.asMap());
-    print(userModule.currentUser.value.asMap());
-    print(userModule.currentUser.value.asMap());
-    print(userModule.currentUser.value.asMap());
-    print(userModule.currentUser.value.asMap());
-    print(userModule.currentUser.value.asMap());
-    print(userModule.currentUser.value.asMap());  
-     print(userModule.currentUser.value.asMap());
-    print(userModule.currentUser.value.asMap());
-    print(userModule.currentUser.value.asMap());
-    print(userModule.currentUser.value.asMap());
-    print(userModule.currentUser.value.asMap());
-    print(userModule.currentUser.value.asMap());
-    print(userModule.currentUser.value.asMap());  
-     print(userModule.currentUser.value.asMap());
-    print(userModule.currentUser.value.asMap());
-    print(userModule.currentUser.value.asMap());
-    print(userModule.currentUser.value.asMap());
-    print(userModule.currentUser.value.asMap());
-    print(userModule.currentUser.value.asMap());
-    print(userModule.currentUser.value.asMap());
-
-    
+  
   }
 
   @override
