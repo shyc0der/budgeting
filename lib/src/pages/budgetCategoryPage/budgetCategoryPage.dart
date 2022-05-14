@@ -32,6 +32,7 @@ class _BudgetCategoryPageState extends State<BudgetCategoryPage> {
     
     _budgetCategoryModule.init(userModel.currentUser.value);
     super.initState();
+    print("888888888888888");
   }
 
   @override
