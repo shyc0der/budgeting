@@ -29,9 +29,16 @@ class _BudgetCategoryPageState extends State<BudgetCategoryPage> {
   ];
   @override
   void initState() {
-    
     _budgetCategoryModule.init(userModel.currentUser.value);
     super.initState();
+    print("888888888888888");
+    print("888888888888888");
+    print("888888888888888");
+    print("888888888888888");
+    print("888888888888888");
+    print("888888888888888");
+    print("888888888888888");
+    print("888888888888888");
     print("888888888888888");
   }
 
