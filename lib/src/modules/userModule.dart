@@ -18,9 +18,7 @@ class UserModule extends GetxController {
   }
 
   Future<void> setCurrentUser(String userId) async {
-    getUserById(userId).then((value) {
-      currentUser.value = value;
-    });
+    currentUser.value = await getUserById(userId);
   }
 
   Future<ResponseModel> addUser(UserModel user) async {
@@ -34,6 +32,4 @@ class UserModule extends GetxController {
       return _res;
     }
   }
-
- 
 }

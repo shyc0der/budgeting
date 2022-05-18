@@ -33,7 +33,6 @@ class _FirstPageState extends State<FirstPage>
     setState(() {
       _budgetCategoryModule.init(userModule.currentUser.value);
     });
-  
   }
 
   @override

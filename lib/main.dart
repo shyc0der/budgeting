@@ -14,38 +14,38 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 
-
-
 void main() async {
-   WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
   await Model.initiateFireStore();
   Get.put(BudgetCategoryModule());
- 
-  runApp( MyApp());
+
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-   MyApp({Key? key}) : super(key: key);
+  MyApp({Key? key}) : super(key: key);
   final UserModule userModule = Get.put(UserModule());
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-     return StreamBuilder<User?>(
-      stream: FirebaseUser.userLoginState(),
-      builder: (context, snapshot) {
-        switch (snapshot.connectionState) {
-          case ConnectionState.waiting:
-            return MaterialApp(home: Material(child: Center(child: LinearProgressIndicator())));
-          case ConnectionState.none:
-            return MaterialApp(home: Material(child: const Text('no connection')));
-          default:
-            if(snapshot.data != null){
-              // get user
-              userModule.setCurrentUser(snapshot.data!.uid.toString());
-            }
-            
-          return GetMaterialApp(
+    return StreamBuilder<User?>(
+        stream: FirebaseUser.userLoginState(),
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return const MaterialApp(
+                  home: Material(
+                      child: Center(child: LinearProgressIndicator())));
+            case ConnectionState.none:
+              return const MaterialApp(
+                  home: Material(child:  Text('no connection')));
+            default:
+
+              return FutureBuilder(
+                future: userModule.setCurrentUser((snapshot.data?.uid).toString()),
+                builder: (_, __){
+                  return GetMaterialApp(
               title: 'BudgetApp',
       theme: ThemeData(
         primarySwatch: Colors.deepOrange,
@@ -76,13 +76,9 @@ class MyApp extends StatelessWidget {
                 }
               },
             );
-          
-        }
-      
-      }
-    );
-  
-    
+                },
+              );
+          }
+        });
   }
 }
-
