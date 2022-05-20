@@ -259,12 +259,7 @@ class _AddExpenseState extends State<AddExpense> {
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Expenses Added Sucessfully')));
       Navigator.pop(context);
-      //print(0)
-      //print(0)
-      //print(0)
-      //print(0)
-      //print(0)
-      //print(0)
+      
     } else {
       Get.showSnackbar(GetSnackBar(
         title: 'Error',

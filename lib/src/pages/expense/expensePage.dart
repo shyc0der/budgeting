@@ -32,7 +32,6 @@ class _ExpensesPageState extends State<ExpensesPage> {
   ];
   @override
   void initState() {
-    // TODO: implement initState
     _budgetCategoryModule.init(userModel.currentUser.value);
     super.initState();
   }
@@ -42,7 +41,6 @@ class _ExpensesPageState extends State<ExpensesPage> {
     return Scaffold(
         backgroundColor: Colors.brown[50],
         body: SingleChildScrollView(
-          //physics:const  NeverScrollableScrollPhysics(),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
@@ -83,6 +81,14 @@ class _ExpensesPageState extends State<ExpensesPage> {
                                     return const Text('No data');
                                   default:
                                     return GestureDetector(
+                                      onLongPress: () {
+                                        Dismissible(key: UniqueKey(),
+                                        onDismissed: (_) async{
+                                          _expenseModule.deleteExpenses(snapshot.data![index].id!);
+                                        }
+                                        ,
+                                        );
+                                      },
                                       onTap: () {
                                         Navigator.push(
                                             context,
