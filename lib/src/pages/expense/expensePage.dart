@@ -6,6 +6,7 @@ import 'package:budget/src/modules/budgetCategoryModule.dart';
 import 'package:budget/src/modules/expenseModule.dart';
 import 'package:budget/src/modules/userModule.dart';
 import 'package:budget/src/pages/expense/addExpensePage.dart';
+import 'package:budget/src/shared.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/get_core.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
@@ -22,8 +23,8 @@ class ExpensesPage extends StatefulWidget {
 
 class _ExpensesPageState extends State<ExpensesPage> {
   final ExpenseModule _expenseModule = ExpenseModule();
- final BudgetCategoryModule _budgetCategoryModule = BudgetCategoryModule();
- UserModule userModel=Get.put(UserModule());
+  final BudgetCategoryModule _budgetCategoryModule = BudgetCategoryModule();
+  UserModule userModel = Get.put(UserModule());
 
   List<Map<String, dynamic>> eExpenses = [
     {
@@ -51,7 +52,8 @@ class _ExpensesPageState extends State<ExpensesPage> {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
                 ),
                 StreamBuilder<List<ExpenseModel>>(
-                    stream: _expenseModule.fetchExpenses(userModel.currentUser.value),
+                    stream: _expenseModule
+                        .fetchExpenses(userModel.currentUser.value),
                     builder: (context, snapshot) {
                       switch (snapshot.connectionState) {
                         case ConnectionState.waiting:
@@ -81,14 +83,6 @@ class _ExpensesPageState extends State<ExpensesPage> {
                                     return const Text('No data');
                                   default:
                                     return GestureDetector(
-                                      onLongPress: () {
-                                        Dismissible(key: UniqueKey(),
-                                        onDismissed: (_) async{
-                                          _expenseModule.deleteExpenses(snapshot.data![index].id!);
-                                        }
-                                        ,
-                                        );
-                                      },
                                       onTap: () {
                                         Navigator.push(
                                             context,
@@ -101,18 +95,41 @@ class _ExpensesPageState extends State<ExpensesPage> {
                                                           total: _tt,
                                                         )));
                                       },
-                                      child: ListTile(
-                                        leading: Text(DateFormat("MMMM").format(
-                                            DateTime.parse(snapshot
-                                                .data![index].month
-                                                .toString()))),
-                                        trailing: Text(DateTime.parse(snapshot
-                                                .data![index].month
-                                                .toString())
-                                            .year
-                                            .toString()),
-                                        title:
-                                            Text('Total Expenses : Ksh. $_tt'),
+                                      child: Dismissible(
+                                        key: UniqueKey(),
+                                        confirmDismiss: (direction) async {
+                                          bool? _delete = await dismissWidget(
+                                              snapshot.data![index].id!);
+                                          if (_delete == true) {
+                                            await _expenseModule.deleteExpenses(
+                                                snapshot.data![index].id!);
+
+                                                 ScaffoldMessenger.of(context).showSnackBar(
+                                                   const SnackBar(
+                                                content: Text("Order Deleted!"),
+                                                ));
+                                            //print('delete successful');
+                                          }
+                                          else{
+
+                                                 ScaffoldMessenger.of(context).showSnackBar(
+                                                   const SnackBar(
+                                                content: Text("Order Not Deleted!")));
+                                          }
+                                        },
+                                        child: ListTile(
+                                          leading: Text(DateFormat("MMMM")
+                                              .format(DateTime.parse(snapshot
+                                                  .data![index].month
+                                                  .toString()))),
+                                          trailing: Text(DateTime.parse(snapshot
+                                                  .data![index].month
+                                                  .toString())
+                                              .year
+                                              .toString()),
+                                          title: Text(
+                                              'Total Expenses : Ksh. $_tt'),
+                                        ),
                                       ),
                                     );
                                 }
