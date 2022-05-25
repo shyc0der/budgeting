@@ -24,8 +24,8 @@ class AddMonthlyIncome extends StatefulWidget {
 class _AddMonthlyIncomeState extends State<AddMonthlyIncome> {
   TextEditingController salaryController = TextEditingController();
   final MonthlyIncomeModule _monthlyIncomeModule = MonthlyIncomeModule();
-    UserModule userModel = Get.put(UserModule());
-    
+  UserModule userModel = Get.put(UserModule());
+
   final BudgetCategoryModule _budgetCategoryModule = BudgetCategoryModule();
 
   bool nameError = false;
@@ -48,8 +48,7 @@ class _AddMonthlyIncomeState extends State<AddMonthlyIncome> {
       _res = widget.incomeModel!.extraIncome!;
     }
 
-    
-      _budgetCategoryModule.init(userModel.currentUser.value);
+    _budgetCategoryModule.init(userModel.currentUser.value);
     super.initState();
   }
 
@@ -128,7 +127,7 @@ class _AddMonthlyIncomeState extends State<AddMonthlyIncome> {
               // Name,Amount
               ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(
-                    primary:const Color.fromRGBO(85, 54, 33, 1),
+                    primary: const Color.fromRGBO(85, 54, 33, 1),
                   ),
                   onPressed: () async {
                     List<Map<String, dynamic>> res;
@@ -148,7 +147,7 @@ class _AddMonthlyIncomeState extends State<AddMonthlyIncome> {
                   },
                   icon: const Icon(Icons.add),
                   label: const Text('ADD EXTRA INCOME')),
-            
+
               const SizedBox(
                 height: 12,
               ),
@@ -175,10 +174,13 @@ class _AddMonthlyIncomeState extends State<AddMonthlyIncome> {
                                             key: UniqueKey(),
                                             direction:
                                                 DismissDirection.endToStart,
-                                            onDismissed: (_) {
-                                              setState(() {
-                                                _res.removeAt(index);
-                                              });
+                                            onDismissed: (_) async{
+                                                    _res.removeAt(index);
+                                             await   _monthlyIncomeModule
+                                                    .deleteIncomeIncome(
+                                                        widget.incomeModel!.id,
+                                                        index.toString());
+                                              
                                             },
                                             child: Row(
                                               mainAxisAlignment:
@@ -202,7 +204,7 @@ class _AddMonthlyIncomeState extends State<AddMonthlyIncome> {
                           ],
                         )
                       : Container()),
-              
+
               const SizedBox(height: 36),
               //Save
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
@@ -273,30 +275,27 @@ class _AddMonthlyIncomeState extends State<AddMonthlyIncome> {
     setState(() {
       isLoading = true;
     });
-    var res = await 
-        _monthlyIncomeModule.updateIncome((widget.incomeModel?.id ?? ''), {
-          'salary' :salaryController.text,
-          'month' : selectedDate,
-          'extraIncome' : _res,
-        });
-  
+    var res = await _monthlyIncomeModule
+        .updateIncome((widget.incomeModel?.id ?? ''), {
+      'salary': salaryController.text,
+      'month': selectedDate,
+      'extraIncome': _res,
+    });
+
     if (res.status == ResponseType.success) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text("Monthly Income Updated!"),
       ));
       // back
       Navigator.pop(context);
-    } 
-    else {
+    } else {
       Get.showSnackbar(GetSnackBar(
         title: 'Error',
         message: res.body.toString(),
         backgroundColor: Colors.redAccent,
       ));
     }
-  
   }
-  
 }
 
 class AddExtraIncome extends StatefulWidget {
@@ -325,7 +324,7 @@ class _AddExtraIncomeState extends State<AddExtraIncome> {
       asmap.addAll(widget.currentExtraIncomes!);
     }
 
-     asmap.fold<double>(
+    asmap.fold<double>(
         0,
         (previousValue, _extraInc) =>
             previousValue +
@@ -472,8 +471,8 @@ class _AddExtraIncomeState extends State<AddExtraIncome> {
                               );
                             })
                         : const Center(
-                          child: Text('Please Add Incomes'),
-                        )),
+                            child: Text('Please Add Incomes'),
+                          )),
                 const SizedBox(
                   height: 5,
                 ),

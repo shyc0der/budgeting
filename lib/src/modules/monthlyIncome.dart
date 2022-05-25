@@ -17,9 +17,10 @@ class MonthlyIncomeModule {
   //fetch Income
   //Stram
   Stream<List<MonthlyIncomeModel>> fetchIncome(UserModel user) {
-    return _monthlyIncomeModel.snapshotsWhere('createdBy',isEqualTo: user.id).map((snapshots) {
+    return _monthlyIncomeModel
+        .snapshotsWhere('createdBy', isEqualTo: user.id)
+        .map((snapshots) {
       return snapshots.docs.map((doc) {
-        
         return MonthlyIncomeModel.fromMap({'id': doc.id, ...doc.data() as Map});
       }).toList();
     });
@@ -36,5 +37,15 @@ class MonthlyIncomeModule {
       String _id, Map<String, dynamic> monthlyIncomeModel) async {
     await _monthlyIncomeModel.updateOnline(_id, monthlyIncomeModel);
     return ResponseModel(ResponseType.success, 'Income Updated');
+  }
+
+  Future<ResponseModel> deleteIncome(String? id) async {
+    await _monthlyIncomeModel.deleteOnline(id!);
+    return ResponseModel(ResponseType.success, 'Income Deleted');
+  }
+
+  Future<ResponseModel> deleteIncomeIncome(String? id, String _id) async {
+    await _monthlyIncomeModel.deleteCollection(_id, _id);
+    return ResponseModel(ResponseType.success, 'Income Deleted');
   }
 }

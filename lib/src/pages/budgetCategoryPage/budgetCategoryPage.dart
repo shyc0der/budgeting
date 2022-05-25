@@ -5,6 +5,7 @@ import 'package:budget/src/models/userModel.dart';
 import 'package:budget/src/modules/budgetCategoryModule.dart';
 import 'package:budget/src/modules/userModule.dart';
 import 'package:budget/src/pages/budgetCategoryPage/addBudgetCategory.dart';
+import 'package:budget/src/shared.dart';
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
 import 'package:intl/intl.dart';
@@ -31,7 +32,6 @@ class _BudgetCategoryPageState extends State<BudgetCategoryPage> {
   void initState() {
     _budgetCategoryModule.init(userModel.currentUser.value);
     super.initState();
- 
   }
 
   @override
@@ -82,18 +82,42 @@ class _BudgetCategoryPageState extends State<BudgetCategoryPage> {
                                                         snapshot.data?[index],
                                                     total: _tt)));
                                   },
-                                  child: ListTile(
-                                    //DateTime.parse(snapshot.data![index].month.toString()).month.toString()
-                                    leading: Text(DateFormat("MMMM").format(
-                                        DateTime.parse(snapshot
-                                            .data![index].month
-                                            .toString()))),
-                                    title: Text('Total Budget : Ksh. $_tt'),
-                                    trailing: Text(DateTime.parse(snapshot
-                                            .data![index].month
-                                            .toString())
-                                        .year
-                                        .toString()),
+                                  child: Dismissible(
+                                    key: UniqueKey(),
+                                    confirmDismiss: (direction) async {
+                                      bool? _delete = await dismissWidget(
+                                          '${DateFormat("MMMM").format(
+                                              DateTime.parse(snapshot
+                                                  .data![index].month
+                                                  .toString()))} Budget');
+                                      if (_delete == true) {
+                                        await _budgetCategoryModule
+                                            .deleteBudget(
+                                                snapshot.data![index].id!);
+                                        const ScaffoldMessenger(
+                                            child: SnackBar(
+                                          content: Text('Budget Deleted'),
+                                        ));
+                                      } else {
+                                        const ScaffoldMessenger(
+                                            child: SnackBar(
+                                                content: Text(
+                                                    'Budget Not Deleted!')));
+                                      }
+                                    },
+                                    child: ListTile(
+                                      //DateTime.parse(snapshot.data![index].month.toString()).month.toString()
+                                      leading: Text(DateFormat("MMMM").format(
+                                          DateTime.parse(snapshot
+                                              .data![index].month
+                                              .toString()))),
+                                      title: Text('Total Budget : Ksh. $_tt'),
+                                      trailing: Text(DateTime.parse(snapshot
+                                              .data![index].month
+                                              .toString())
+                                          .year
+                                          .toString()),
+                                    ),
                                   ),
                                 );
                               });

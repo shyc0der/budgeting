@@ -106,7 +106,7 @@ class _ExpensesPageState extends State<ExpensesPage> {
 
                                                  ScaffoldMessenger.of(context).showSnackBar(
                                                    const SnackBar(
-                                                content: Text("Order Deleted!"),
+                                                content: Text("Expense Deleted!"),
                                                 ));
                                             //print('delete successful');
                                           }
@@ -114,7 +114,7 @@ class _ExpensesPageState extends State<ExpensesPage> {
 
                                                  ScaffoldMessenger.of(context).showSnackBar(
                                                    const SnackBar(
-                                                content: Text("Order Not Deleted!")));
+                                                content: Text("Expense Not Deleted!")));
                                           }
                                         },
                                         child: ListTile(
